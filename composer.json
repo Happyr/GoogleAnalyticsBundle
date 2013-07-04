@@ -18,8 +18,10 @@
         "happyr/google-api-bundle": "dev-master",
         "unitedprototype/php-ga": "dev-master"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-0": { "HappyR\\Google\\AnalyticsBundle": "" }
     },
     "target-dir": "HappyR/Google/AnalyticsBundle"
 }
+

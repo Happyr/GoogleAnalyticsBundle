@@ -23,6 +23,7 @@ class HappyRGoogleAnalyticsExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('happy_r_google_analytics', $config);
+        $container->setParameter('happy_r_google_analytics.token_file_path', $config['token_file_path']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

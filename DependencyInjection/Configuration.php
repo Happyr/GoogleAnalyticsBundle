@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
          $rootNode
           ->children()
             ->scalarNode('profile_id')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('token_file')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('token_file_path')->isRequired()->cannotBeEmpty()->end()
           ->end()->end();
 
         return $treeBuilder;

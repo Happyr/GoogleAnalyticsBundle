@@ -70,12 +70,14 @@ class PageStatisticsService
      */
     public function getPageViews($uri, $since = null, $regex='$')
     {
-        if (!$since)
-            $since = date('Y-m-d', time() - 86400 * 365); //one year ago
+        if (!$since){
+            //one year ago
+            $since = date('Y-m-d', time() - 86400 * 365);
+        }
 
         $this->cache->setNamespace('PageStatistics.PageViews');
-        $cache_key=md5($uri.$since).time();
-        if (false === ($visits = $this->cache->fetch($cache_key))) {
+        $cacheKey=md5($uri.$since).time();
+        if (false === ($visits = $this->cache->fetch($cacheKey))) {
             //check if we got a token
             if (!$this -> hasAccessToken()) {
                 return 0;
@@ -85,22 +87,26 @@ class PageStatisticsService
 
             //fetch result
             try {
-                $results = $this->analytics->data_ga->get('ga:'.$this->config['profile_id'], $since, date('Y-m-d'), 'ga:pageviews', array('filters' => 'ga:pagePath=~^'.$uri.$regex));
+                $results = $this->analytics->data_ga->get(
+                    'ga:'.$this->config['profile_id'],
+                    $since, date('Y-m-d'),
+                    'ga:pageviews',
+                    array('filters' => 'ga:pagePath=~^'.$uri.$regex)
+                );
+
                 $rows = $results -> getRows();
                 $visits = intval($rows[0][0]);
             } catch (\Google_AuthException $e) {
                 $visits=0;
             }
 
-            //save cache
-            $this->cache->save($cache_key, $visits, 3600);//TTL 1h
+            //save cache (TTL 1h)
+            $this->cache->save($cacheKey, $visits, 3600);
 
             //save access token
             $this -> saveAccessToken();
         }
 
         return $visits;
-
     }
-
 }

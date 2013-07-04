@@ -15,8 +15,8 @@
         "php": ">=5.3.2",
         "symfony/framework-bundle": ">=2.0",
         "symfony/yaml": "2.1.*",
-        "happyr/google-api-bundle": "1.0.*",
-        "unitedprototype/php-ga": "dev-master"
+        "happyr/google-api-bundle": "dev-master@dev",
+        "unitedprototype/php-ga": "dev-master@dev"
     },
     "minimum-stability": "dev",
     "autoload": {

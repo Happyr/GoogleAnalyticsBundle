@@ -6,7 +6,6 @@ use HappyR\Google\AnalyticsBundle\Entity\GoogleApiReportToken;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/admin/google")
@@ -15,12 +14,14 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/oauth2callback")
-     * @Template()
+     *
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function oauth2callbackAction()
     {
         $em=$this->getDoctrine()->getManager();
-        $client=$pageStat=$this->get('webfish.google.client');
+        $client=$this->get('webfish.google.client');
         $client->authenticate();
 
         $token=$em->getRepository('HappyRGoogleAnalyticsBundle:GoogleApiReportToken')->findOne();
@@ -37,12 +38,14 @@ class DefaultController extends Controller
 
     /**
      * @Route("/authenticate/analytics")
-     * @Template()
+     *
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function authenticateAction()
     {
         $em=$this->getDoctrine()->getManager();
-        $client=$pageStat=$this->get('webfish.google.analytics')->client;
+        $client=$this->get('webfish.google.analytics')->client;
 
         $token = $em -> getRepository('HappyRGoogleAnalyticsBundle:GoogleApiReportToken') -> findOne();
         if ($token) {//if token is defined

@@ -3,32 +3,47 @@
 namespace HappyR\Google\AnalyticsBundle\Services;
 
 use HappyR\Google\AnalyticsBundle\Entity\GoogleApiReportToken;
+use HappyR\Google\ApiBundle\Services\GoogleAnalytics;
 
+/**
+ * Class PageStatisticsService
+ *
+ * This service fetches data from the API
+ */
 class PageStatisticsService
 {
     protected $analytics;//The API
-    private $em;
+    private $tokenService;
     private $config;
     protected $cache;
 
-    public function __construct($analyticsService, $em, $cache, $config)
+    /**
+     * @param GoogleAnalytics $analyticsService
+     * @param TokenService $tokenService
+     * @param mixed $cache
+     * @param array $config
+     */
+    public function __construct(GoogleAnalytics $analyticsService, TokenService $tokenService, $cache, array $config)
     {
         $this -> analytics = $analyticsService;
-        $this -> em = $em;
+        $this -> tokenService = $tokenService;
         $this->config=$config;
         $this->cache=$cache;
     }
 
     /**
      * Returns true if we have a access token
+     *
+     * @return bool
      */
     private function hasAccessToken()
     {
-        $token = $this->em->getRepository('HappyRGoogleAnalyticsBundle:GoogleApiReportToken')->findOne();
-        if (!$token)
+        $token = $this->tokenService->getToken();
+        if (!$token){
             return false;
+        }
 
-        $this->analytics->client->setAccessToken($token->getToken());
+        $this->analytics->client->setAccessToken($token);
 
         return $this->analytics->client->getAccessToken();
     }
@@ -38,25 +53,25 @@ class PageStatisticsService
      */
     private function saveAccessToken()
     {
-        $token = $this -> em -> getRepository('HappyRGoogleAnalyticsBundle:GoogleApiReportToken') -> findOne();
-        if (!$token) {
-            $token = new GoogleApiReportToken();
-        }
+        $token = $this->analytics->client->getAccessToken();
 
-        $token->setToken($this->analytics->client->getAccessToken());
-
-        $this -> em -> persist($token);
-        $this -> em -> flush();
-
+        //save token
+        $this->tokenService->setToken($token);
     }
 
     /**
      * return the page views for the given url
+     *
+     * @param string $uri
+     * @param null $since
+     * @param string $regex
+     *
+     * @return int
      */
     public function getPageViews($uri, $since = null, $regex='$')
     {
         if (!$since)
-           $since = date('Y-m-d', time() - 86400 * 365); //one year ago
+            $since = date('Y-m-d', time() - 86400 * 365); //one year ago
 
         $this->cache->setNamespace('PageStatistics.PageViews');
         $cache_key=md5($uri.$since).time();

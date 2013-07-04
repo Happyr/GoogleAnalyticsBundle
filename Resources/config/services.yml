@@ -1,0 +1,8 @@
+parameters:
+
+
+
+services:
+  happyr.google.analytics.page_statistics:
+      class: HappyR\Google\AnalyticsBundle\Services\PageStatisticsService
+      arguments: [@webfish.google.analytics, @doctrine.orm.entity_manager, @cache, %happy_r_google_analytics%]

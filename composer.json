@@ -1,0 +1,26 @@
+{
+    "name": "happyr/google-analytics-bundle",
+    "type": "symfony-bundle",
+    "description": "The Google Analytics Bundle lets you send data (like event tracking) to Google and receive data (like page statistics).",
+    "keywords": ["Google", "Analytics", "Google Analytics"],
+    "homepage": "http://developer.happyr.se",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias@happyrecruiting.se"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/framework-bundle": ">=2.0",
+        "symfony/yaml": "2.1.*",
+        "happyr/google-api-bundle": "dev-master",
+        "unitedprototype/php-ga": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "HappyR\\Google\\AnalyticsBundle": "" }
+    },
+    "target-dir": "HappyR/Google/AnalyticsBundle"
+}

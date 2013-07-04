@@ -3,7 +3,7 @@
 namespace HappyR\Google\AnalyticsBundle\Services;
 
 use HappyR\Google\AnalyticsBundle\Entity\GoogleApiReportToken;
-use HappyR\Google\ApiBundle\Services\GoogleAnalytics;
+use HappyR\Google\ApiBundle\Services\AnalyticsService;
 
 /**
  * Class PageStatisticsService
@@ -18,12 +18,12 @@ class PageStatisticsService
     protected $cache;
 
     /**
-     * @param GoogleAnalytics $analyticsService
+     * @param AnalyticsService $analyticsService
      * @param TokenService $tokenService
      * @param mixed $cache
      * @param array $config
      */
-    public function __construct(GoogleAnalytics $analyticsService, TokenService $tokenService, $cache, array $config)
+    public function __construct(AnalyticsService $analyticsService, TokenService $tokenService, $cache, array $config)
     {
         $this -> analytics = $analyticsService;
         $this -> tokenService = $tokenService;

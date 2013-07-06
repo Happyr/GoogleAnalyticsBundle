@@ -22,7 +22,7 @@
         "mockery/mockery": "*"
     },
     "autoload": {
-        "psr-0": { "HappyR\\Google\\AnalyticsBundle": "" }
+        "psr-0": { "HappyR\\Google\\AnalyticsBundle\\": "" }
     },
     "target-dir": "HappyR/Google/AnalyticsBundle"
 }

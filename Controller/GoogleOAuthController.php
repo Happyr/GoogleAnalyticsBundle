@@ -6,54 +6,58 @@ use HappyR\Google\AnalyticsBundle\Entity\GoogleApiReportToken;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 /**
- * @Route("/admin/google")
+ * @Route("/google/analytics")
  */
 class GoogleOAuthController extends Controller
 {
     /**
-     * @Route("/oauth2callback")
+     * @Route("/", name="_happyr_google_analytics_index")
+     * @Template()
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function indexAction()
+    {
+        $token = $this->get('happyr.google.analytics.token')->getToken();
+
+        return array(
+            'authenticated'=>$token!=null,
+        );
+    }
+
+    /**
+     * @Route("/oauth2callback", name="_happyr_google_analytics_callback")
      *
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function oauth2callbackAction()
     {
-        $em=$this->getDoctrine()->getManager();
-        $client=$this->get('webfish.google.client');
+        //authenticate
+        $client=$this->get('happyr.google.api.client');
         $client->authenticate();
 
-        $token=$em->getRepository('HappyRGoogleAnalyticsBundle:GoogleApiReportToken')->findOne();
-        if (!$token) {
-            $token=new GoogleApiReportToken();
-        }
-        $token->setToken($client->getAccessToken());
+        //save token
+        $token = $this->get('happyr.google.analytics.token')->setToken($client->getAccessToken());
 
-        $em->persist($token);
-        $em->flush();
-
-        return $this->redirect($this->generateUrl('_admin_dashboard'));
+        return $this->redirect($this->generateUrl('_happyr_google_analytics_index'));
     }
 
     /**
-     * @Route("/authenticate/analytics")
+     * @Route("/authenticate", name="_happyr_google_analytics_authenticate")
      *
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function authenticateAction()
     {
-        $em=$this->getDoctrine()->getManager();
-        $client=$this->get('webfish.google.analytics')->client;
+        $token = $this->get('happyr.google.analytics.token')->getToken();
 
-        $token = $em -> getRepository('HappyRGoogleAnalyticsBundle:GoogleApiReportToken') -> findOne();
-        if ($token) {//if token is defined
-            $this->get('session')->setFlash('success', 'applicare.profile.flash');
-
-            return $this->redirect($this->generateUrl('_admin_dashboard'));
-        }
-
+        $client=$this->get('happyr.google.api.analytics')->client;
         $authUrl = $client -> createAuthUrl();
 
         return $this->redirect($authUrl);

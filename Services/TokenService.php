@@ -55,6 +55,6 @@ class TokenService
     {
         $filename=$this->tokenPrefix.$name;
 
-        return @file_put_contents($this->path.$filename, $token);
+        return file_put_contents($this->path.$filename, $token);
     }
 }

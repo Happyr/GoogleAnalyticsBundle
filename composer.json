@@ -16,7 +16,8 @@
         "symfony/framework-bundle": "2.*",
         "symfony/yaml": "2.*",
         "happyr/google-api-bundle": "dev-master",
-        "unitedprototype/php-ga": "dev-master"
+        "unitedprototype/php-ga": "dev-master",
+        "evert/google-api-php-client": "@dev"
     },
     "require-dev": {
         "mockery/mockery": "*"

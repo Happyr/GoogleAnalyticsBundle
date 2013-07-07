@@ -10,8 +10,8 @@ What is HappyR?
 ---------------
 The HappyR namespace is developed by [HappyRecruiting][1]. We put some of our bundles here because we love to share.
 Since we use a lot of open source libraries and bundles in our application it feels natural to give back something.
-You will find all our Symfony2 bundles that we've created for the open source worl at [developer.happyr.se][2]. You
-will also find more documentation about each bundleand our API clients, WordPress plugins and more.
+You will find all our Symfony2 bundles that we've created for the open source world at [developer.happyr.se][2]. You
+will also find more documentation about each bundle and our API clients, WordPress plugins and more.
 
 
 
@@ -40,7 +40,7 @@ Then, you can install the new dependencies by running Composer's ``update``
 command from the directory where your ``composer.json`` file is located:
 
 ```bash
-$ php composer.phar update ekino/newrelic-bundle
+$ php composer.phar update
 ```
 
 ### Step 2: Register the bundle

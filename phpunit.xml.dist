@@ -9,25 +9,39 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
+         codecoverage= "true"
          bootstrap="Tests/bootstrap.php"
         >
+
+    <formatter type="clover" usefile="false" />
     <testsuites>
         <testsuite name="HappyR Google Analytics Test Suite">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>
 
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener" file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php">
+        </listener>
+    </listeners>
+
     <filter>
-        <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./Tests/</directory>
-                <directory>./DataFixtures/</directory>
-                <directory>./Resources/</directory>
-                <directory>./DependencyInjection/</directory>
-                <directory>./vendor/</directory>
-            </exclude>
-        </whitelist>
+        <blacklist>
+            <directory>./vendor/</directory>
+            <directory>./Tests/</directory>
+            <directory>./DataFixtures/</directory>
+            <directory>./Resources/</directory>
+            <directory>./DependencyInjection/</directory>
+
+            <!-- Don't test interfaces -->
+            <directory suffix="Interface.php">./</directory>
+        </blacklist>
     </filter>
+
+    <logging>
+        <log type="coverage-clover" target="build/logs/phpunit.coverage.xml"/>
+        <log type="junit" target="build/logs/phpunit.xml" logIncompleteSkipped="false"/>
+    </logging>
+
 
 </phpunit>

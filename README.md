@@ -1,7 +1,7 @@
 Google Analytics Bundle
 =======================
 
-GoogleAnalticsBundle is a Symfony2 bundle that helps you to communicate with Google Analytics. It will
+GoogleAnalyticsBundle is a Symfony2 bundle that helps you to communicate with Google Analytics. It will
 push data to the server (like page visits and events) and it can fetch data from the server (like pageviews for a
 specific url).
 

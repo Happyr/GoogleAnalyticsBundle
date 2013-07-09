@@ -1,12 +1,18 @@
 parameters:
-
+  happyr.google.analytics.page_statistics.class: 'HappyR\Google\AnalyticsBundle\Services\PageStatisticsService'
+  happyr.google.analytics.token.class: 'HappyR\Google\AnalyticsBundle\Services\TokenService'
+  happyr.google.analytics.tracker.class: 'HappyR\Google\AnalyticsBundle\Services\TrackerService'
 
 
 services:
   happyr.google.analytics.page_statistics:
-    class: HappyR\Google\AnalyticsBundle\Services\PageStatisticsService
+    class: %happyr.google.analytics.page_statistics.class%
     arguments: [@happyr.google.api.analytics, @happyr.google.analytics.token, @cache, %happy_r_google_analytics%]
 
   happyr.google.analytics.token:
-    class: HappyR\Google\AnalyticsBundle\Services\TokenService
+    class: %happyr.google.analytics.token.class%
     arguments: [%happy_r_google_analytics.token_file_path%]
+
+  happyr.google.analytics.tracker:
+      class: %happyr.google.analytics.tracker.class%
+      arguments: [%happy_r_google_analytics.tracker_id%, %happy_r_google_analytics.host%]

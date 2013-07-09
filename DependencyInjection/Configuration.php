@@ -22,6 +22,8 @@ class Configuration implements ConfigurationInterface
          $rootNode
           ->children()
             ->scalarNode('profile_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('tracker_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('host')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('token_file_path')->isRequired()->cannotBeEmpty()->end()
           ->end()->end();
 

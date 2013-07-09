@@ -1,7 +1,7 @@
 <?php
 
 
-namespace HappyR\Google\AnalyticsBundle\Services\Tracking;
+namespace HappyR\Google\AnalyticsBundle\Services;
 
 use HappyR\Google\AnalyticsBundle\Model\Transaction;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ use UnitedPrototype\GoogleAnalytics\Tracker as api;
  * 
  * This class encapsulate the tracker from the lib
  */
-class Tracker
+class TrackerService
 {
     protected $api;
 

@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
 
          $rootNode
           ->children()
+            ->booleanNode('tracker_enabled')->defaultTrue()->end()
             ->scalarNode('profile_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('tracker_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('host')->isRequired()->cannotBeEmpty()->end()

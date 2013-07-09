@@ -39,7 +39,6 @@ class TrackerDummyService extends TrackerService
      * @param string|null $value
      * @param bool $nonInteraction
      *
-     * @return mixed|void
      */
     public function trackEvent($category, $action, $label = null, $value = null, $nonInteraction = false)
     {
@@ -54,7 +53,6 @@ class TrackerDummyService extends TrackerService
      * @param null $action
      * @param null $target
      *
-     * @return mixed|void
      */
     public function trackSocial($network = null, $action = null, $target = null)
     {
@@ -67,7 +65,6 @@ class TrackerDummyService extends TrackerService
      *
      * @param Transaction $trans
      *
-     * @return mixed|void
      */
     public function trackTransaction(Transaction $trans)
     {

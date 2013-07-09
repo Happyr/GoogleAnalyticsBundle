@@ -29,7 +29,8 @@ class HappyRGoogleAnalyticsExtension extends Extension
 
         //if tracker is not enabled, use the dummy
         if(!$config['tracker_enabled']){
-            $container->setParameter('happyr.google.analytics.tracker.class', 'HappyR\Google\AnalyticsBundle\Services\TrackerDummyService');
+            $container->setParameter('happyr.google.analytics.tracker.class',
+                'HappyR\Google\AnalyticsBundle\Services\TrackerDummyService');
         }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

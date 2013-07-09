@@ -24,8 +24,10 @@ class HappyRGoogleAnalyticsExtension extends Extension
 
         $container->setParameter('happy_r_google_analytics', $config);
         $container->setParameter('happy_r_google_analytics.token_file_path', $config['token_file_path']);
-        $container->setParameter('happy_r_google_analytics.tracker_id', $config['tracker_id']);
         $container->setParameter('happy_r_google_analytics.host', $config['host']);
+
+        $container->setParameter('happy_r_google_analytics.tracker_id', $config['tracker_id']);
+        $container->setParameter('happy_r_google_analytics.tracker', $config['tracker']);
 
         //if tracker is not enabled, use the dummy
         if(!$config['tracker_enabled']){

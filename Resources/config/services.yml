@@ -14,5 +14,5 @@ services:
     arguments: [%happy_r_google_analytics.token_file_path%]
 
   happyr.google.analytics.tracker:
-      class: %happyr.google.analytics.tracker.class%
-      arguments: [%happy_r_google_analytics.tracker_id%, %happy_r_google_analytics.host%]
+    class: %happyr.google.analytics.tracker.class%
+    arguments: [%happy_r_google_analytics.tracker_id%, %happy_r_google_analytics.host%, %happy_r_google_analytics.tracker%]

@@ -6,6 +6,7 @@ namespace HappyR\Google\AnalyticsBundle\Services;
 use HappyR\Google\AnalyticsBundle\Model\Transaction;
 use Symfony\Component\HttpFoundation\Request;
 
+use UnitedPrototype\GoogleAnalytics\Config;
 use UnitedPrototype\GoogleAnalytics\Event;
 use UnitedPrototype\GoogleAnalytics\Page;
 use UnitedPrototype\GoogleAnalytics\Session;
@@ -49,10 +50,11 @@ class TrackerService
      *
      * @param string $profileId might be "UA-12345678-9"
      * @param string $host might be "example.com"
+     * @param array $config
      */
-    function __construct($profileId, $host)
+    function __construct($profileId, $host, array $config=array())
     {
-        $this->api=new Api($profileId, $host);
+        $this->api=new Api($profileId, $host, new Config($config));
 
         $this->session=new Session();
         $this->visitor=new Visitor();

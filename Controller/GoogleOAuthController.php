@@ -42,7 +42,7 @@ class GoogleOAuthController extends Controller
         $client->authenticate();
 
         //save token
-        $token = $this->get('happyr.google.analytics.token')->setToken($client->getAccessToken());
+        $this->get('happyr.google.analytics.token')->setToken($client->getAccessToken());
 
         return $this->redirect($this->generateUrl('_happyr_google_analytics_index'));
     }
@@ -55,8 +55,6 @@ class GoogleOAuthController extends Controller
      */
     public function authenticateAction()
     {
-        $token = $this->get('happyr.google.analytics.token')->getToken();
-
         $client=$this->get('happyr.google.api.analytics')->client;
         $authUrl = $client -> createAuthUrl();
 

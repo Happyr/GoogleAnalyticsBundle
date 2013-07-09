@@ -67,6 +67,7 @@ class TrackerService
      * @param sring $url
      * @param string $title
      *
+     * @return mixed
      */
     public function trackPageview($url, $title=null)
     {
@@ -86,7 +87,7 @@ class TrackerService
      * the type of user interaction for the web object.
      * @param string $label An optional string to provide additional dimensions to the event data.
      * @param string $value An integer that you can use to provide numerical data about the user event.
-     * @param boolean $nonInteractionA boolean that when set to true, indicates that the event hit will
+     * @param boolean $nonInteraction A boolean that when set to true, indicates that the event hit will
      * not be used in bounce-rate calculation.
      *
      *
@@ -100,6 +101,15 @@ class TrackerService
     }
 
 
+    /**
+     *
+     *
+     * @param null $network
+     * @param null $action
+     * @param null $target
+     *
+     * @return mixed
+     */
     public function trackSocial($network = null, $action = null, $target = null)
     {
         $social=new SocialInteraction($network, $action, $target);
@@ -112,6 +122,7 @@ class TrackerService
      *
      * @param Transaction $trans
      *
+     * @return mixed
      */
     public function trackTransaction(Transaction $trans)
     {

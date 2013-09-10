@@ -2,6 +2,7 @@
 
 namespace HappyR\Google\AnalyticsBundle\Services;
 
+use HappyR\Google\AnalyticsBundle\CacheServices\CacheInterface;
 use HappyR\Google\AnalyticsBundle\Entity\GoogleApiReportToken;
 use HappyR\Google\ApiBundle\Services\AnalyticsService;
 
@@ -20,10 +21,10 @@ class PageStatisticsService
     /**
      * @param AnalyticsService $analyticsService
      * @param TokenService $tokenService
-     * @param mixed $cache
+     * @param CacheInterface $cache
      * @param array $config
      */
-    public function __construct(AnalyticsService $analyticsService, TokenService $tokenService, $cache, array $config)
+    public function __construct(AnalyticsService $analyticsService, TokenService $tokenService, CacheInterface $cache, array $config)
     {
         $this -> analytics = $analyticsService;
         $this -> tokenService = $tokenService;
@@ -101,7 +102,7 @@ class PageStatisticsService
             }
 
             //save cache (TTL 1h)
-            $this->cache->save($cacheKey, $visits, 3600);
+            $this->cache->save($cacheKey, $visits, $this->config['cache']['cache_lifetime']);
 
             //save access token
             $this -> saveAccessToken();

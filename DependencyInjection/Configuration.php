@@ -31,7 +31,14 @@ class Configuration implements ConfigurationInterface
                  ->booleanNode('sendOnShutdown')->defaultFalse()->end()
                  ->booleanNode('fireAndForget')->defaultFalse()->end()
                  ->booleanNode('anonymizeIpAddresses')->defaultFalse()->end()
+             ->end()->end()
+             ->arrayNode('cache')->addDefaultsIfNotSet()->children()
+                 ->integerNode('cache_lifetime')->defaultValue(3600)->end()
+                 ->scalarNode('service')->defaultValue('happyr.google.analytics.cache.dummy')->isRequired()->end()
+                 ->scalarNode('doctrine_class')->defaultValue('Doctrine\Common\Cache\ApcCache')->end()
              ->end()
+
+
 
           ->end()->end();
 

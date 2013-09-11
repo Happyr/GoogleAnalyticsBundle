@@ -24,8 +24,12 @@ class PageStatisticsService
      * @param CacheInterface $cache
      * @param array $config
      */
-    public function __construct(AnalyticsService $analyticsService, TokenService $tokenService, CacheInterface $cache, array $config)
-    {
+    public function __construct(
+        AnalyticsService $analyticsService,
+        TokenService $tokenService,
+        CacheInterface $cache,
+        array $config
+    ) {
         $this -> analytics = $analyticsService;
         $this -> tokenService = $tokenService;
         $this->config=$config;

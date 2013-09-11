@@ -40,7 +40,8 @@ class HappyRGoogleAnalyticsExtension extends Extension
         switch($config['cache']['service']){
             case 'doctrine':
                 if (!isset($config['cache']['doctrine_class'])){
-                    throw new \LogicException('When using the "doctrine" as cache.service, the "cache.doctrine_class" config parameter must be set.');
+                    throw new \LogicException('When using the "doctrine" as cache.service, the "cache.doctrine_class"'.
+                    ' config parameter must be set.');
                 }
 
                 //check if doctrine exists
@@ -48,7 +49,10 @@ class HappyRGoogleAnalyticsExtension extends Extension
                     throw new \LogicException('The class "'.$config['cache']['doctrine_class'].'" does not exist.');
                 }
 
-                $container->setParameter('happyr.google.analytics.cache.doctrine_class', $config['cache']['doctrine_class']);
+                $container->setParameter(
+                    'happyr.google.analytics.cache.doctrine_class',
+                    $config['cache']['doctrine_class']
+                );
 
                 $cacheService = new Reference('happyr.google.analytics.cache.doctrine');
                 break;

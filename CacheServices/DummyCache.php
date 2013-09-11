@@ -15,7 +15,7 @@ class DummyCache implements CacheInterface
     /**
      * The namespace of the cache
      *
-     * @param $name
+     * @param string $name
      *
      * @return mixed
      */
@@ -27,9 +27,9 @@ class DummyCache implements CacheInterface
     /**
      * Fetch a new cache by its id
      *
-     * @param $id
+     * @param string $id
      *
-     * @return mixed
+     * @return boolean false
      */
     public function fetch($id)
     {
@@ -39,9 +39,9 @@ class DummyCache implements CacheInterface
     /**
      * Save data into cache
      *
-     * @param $id
-     * @param $data
-     * @param int $lifeTime
+     * @param string $id
+     * @param mixed $data
+     * @param integer $lifeTime
      *
      */
     public function save($id, $data, $lifeTime = 0)

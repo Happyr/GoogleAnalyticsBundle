@@ -29,7 +29,7 @@ following lines. I have contacted the authors of these libraries and are waiting
     // ...
     require: {
         // ...
-        "happyr/google-analytics-bundle": "1.0.*",
+        "happyr/google-analytics-bundle": "1.2.*",
             "unitedprototype/php-ga": "@dev"
     }
 }

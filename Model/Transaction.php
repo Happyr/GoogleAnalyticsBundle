@@ -11,5 +11,4 @@ use UnitedPrototype\GoogleAnalytics\Transaction as BaseTransaction;
  */
 class Transaction extends BaseTransaction
 {
-
 }

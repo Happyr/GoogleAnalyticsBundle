@@ -15,7 +15,7 @@ class TokenService
     /**
      * @param string $path to token
      */
-    function __construct($path)
+    public function __construct($path)
     {
         $path = rtrim($path, '/') . '/';
 

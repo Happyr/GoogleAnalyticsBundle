@@ -50,7 +50,7 @@ class TrackerService
      * @param string $host might be "example.com"
      * @param array $config
      */
-    function __construct($profileId, $host, array $config = array())
+    public function __construct($profileId, $host, array $config = array())
     {
         $this->api = new Api($profileId, $host, new Config($config));
 

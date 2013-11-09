@@ -24,7 +24,7 @@ class DoctrineCache implements CacheInterface
     /**
      * @param CacheProvider $cache
      */
-    function __construct(CacheProvider $cache)
+    public function __construct(CacheProvider $cache)
     {
         $this->cache = $cache;
     }

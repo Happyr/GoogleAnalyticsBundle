@@ -19,28 +19,26 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('happy_r_google_analytics');
 
-         $rootNode
-          ->children()
+        $rootNode
+            ->children()
             ->scalarNode('profile_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('host')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('token_file_path')->isRequired()->cannotBeEmpty()->end()
             ->booleanNode('tracker_enabled')->defaultTrue()->end()
             ->scalarNode('tracker_id')->isRequired()->cannotBeEmpty()->end()
-             ->arrayNode('tracker')->addDefaultsIfNotSet()->children()
-                 ->floatNode('requestTimeout')->defaultValue(1)->end()
-                 ->booleanNode('sendOnShutdown')->defaultFalse()->end()
-                 ->booleanNode('fireAndForget')->defaultFalse()->end()
-                 ->booleanNode('anonymizeIpAddresses')->defaultFalse()->end()
-             ->end()->end()
-             ->arrayNode('cache')->addDefaultsIfNotSet()->children()
-                 ->integerNode('cache_lifetime')->defaultValue(3600)->end()
-                 ->scalarNode('service')->defaultValue('happyr.google.analytics.cache.dummy')->isRequired()->end()
-                 ->scalarNode('doctrine_class')->defaultValue('Doctrine\Common\Cache\ApcCache')->end()
-             ->end()
+            ->arrayNode('tracker')->addDefaultsIfNotSet()->children()
+            ->floatNode('requestTimeout')->defaultValue(1)->end()
+            ->booleanNode('sendOnShutdown')->defaultFalse()->end()
+            ->booleanNode('fireAndForget')->defaultFalse()->end()
+            ->booleanNode('anonymizeIpAddresses')->defaultFalse()->end()
+            ->end()->end()
+            ->arrayNode('cache')->addDefaultsIfNotSet()->children()
+            ->integerNode('cache_lifetime')->defaultValue(3600)->end()
+            ->scalarNode('service')->defaultValue('happyr.google.analytics.cache.dummy')->isRequired()->end()
+            ->scalarNode('doctrine_class')->defaultValue('Doctrine\Common\Cache\ApcCache')->end()
+            ->end()
 
-
-
-          ->end()->end();
+            ->end()->end();
 
         return $treeBuilder;
     }

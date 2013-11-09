@@ -3,7 +3,6 @@
 
 namespace HappyR\Google\AnalyticsBundle\CacheServices;
 
-
 /**
  * Class CacheInterface
  *

@@ -3,7 +3,6 @@
 
 namespace HappyR\Google\AnalyticsBundle\CacheServices;
 
-
 /**
  * Class DummyCache, This class does nothing...
  *
@@ -21,7 +20,6 @@ class DummyCache implements CacheInterface
      */
     public function setNamespace($name)
     {
-
     }
 
     /**
@@ -46,7 +44,5 @@ class DummyCache implements CacheInterface
      */
     public function save($id, $data, $lifeTime = 0)
     {
-
     }
-
 }

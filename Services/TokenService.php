@@ -3,7 +3,6 @@
 
 namespace HappyR\Google\AnalyticsBundle\Services;
 
-
 /**
  * A service that handles tokens
  *
@@ -11,14 +10,14 @@ namespace HappyR\Google\AnalyticsBundle\Services;
 class TokenService
 {
     protected $path;
-    protected $tokenPrefix='google-analytics-token';
+    protected $tokenPrefix = 'google-analytics-token';
 
     /**
      * @param string $path to token
      */
     function __construct($path)
     {
-        $path=rtrim($path,'/').'/';
+        $path = rtrim($path, '/') . '/';
 
         $this->path = $path;
     }
@@ -30,13 +29,13 @@ class TokenService
      *
      * @return string|null
      */
-    public function getToken($name='')
+    public function getToken($name = '')
     {
-        $filename=$this->tokenPrefix.$name;
+        $filename = $this->tokenPrefix . $name;
 
-        $token=@file_get_contents($this->path.$filename);
+        $token = @file_get_contents($this->path . $filename);
 
-        if($token===false){
+        if ($token === false) {
             return null;
         }
 
@@ -51,10 +50,10 @@ class TokenService
      *
      * @return bool true if success
      */
-    public function setToken($token, $name='')
+    public function setToken($token, $name = '')
     {
-        $filename=$this->tokenPrefix.$name;
+        $filename = $this->tokenPrefix . $name;
 
-        return @file_put_contents($this->path.$filename, $token);
+        return @file_put_contents($this->path . $filename, $token);
     }
 }

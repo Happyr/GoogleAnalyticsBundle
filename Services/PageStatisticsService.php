@@ -13,7 +13,7 @@ use HappyR\Google\ApiBundle\Services\AnalyticsService;
  */
 class PageStatisticsService
 {
-    protected $analytics;//The API
+    protected $analytics; //The API
     private $tokenService;
     private $config;
     protected $cache;
@@ -30,10 +30,10 @@ class PageStatisticsService
         CacheInterface $cache,
         array $config
     ) {
-        $this -> analytics = $analyticsService;
-        $this -> tokenService = $tokenService;
-        $this->config=$config;
-        $this->cache=$cache;
+        $this->analytics = $analyticsService;
+        $this->tokenService = $tokenService;
+        $this->config = $config;
+        $this->cache = $cache;
     }
 
     /**
@@ -44,7 +44,7 @@ class PageStatisticsService
     private function hasAccessToken()
     {
         $token = $this->tokenService->getToken();
-        if (!$token){
+        if (!$token) {
             return false;
         }
 
@@ -73,43 +73,44 @@ class PageStatisticsService
      *
      * @return int
      */
-    public function getPageViews($uri, $since = null, $regex='$')
+    public function getPageViews($uri, $since = null, $regex = '$')
     {
-        if (!$since){
+        if (!$since) {
             //one year ago
             $since = date('Y-m-d', time() - 86400 * 365);
         }
 
         $this->cache->setNamespace('PageStatistics.PageViews');
-        $cacheKey=md5($uri.$since).time();
+        $cacheKey = md5($uri . $since) . time();
         if (false === ($visits = $this->cache->fetch($cacheKey))) {
             //check if we got a token
-            if (!$this -> hasAccessToken()) {
+            if (!$this->hasAccessToken()) {
                 return 0;
             }
 
-            $uri=str_replace('/app_dev.php/', '/', $uri);
+            $uri = str_replace('/app_dev.php/', '/', $uri);
 
             //fetch result
             try {
                 $results = $this->analytics->data_ga->get(
-                    'ga:'.$this->config['profile_id'],
-                    $since, date('Y-m-d'),
+                    'ga:' . $this->config['profile_id'],
+                    $since,
+                    date('Y-m-d'),
                     'ga:pageviews',
-                    array('filters' => 'ga:pagePath=~^'.$uri.$regex)
+                    array('filters' => 'ga:pagePath=~^' . $uri . $regex)
                 );
 
-                $rows = $results -> getRows();
+                $rows = $results->getRows();
                 $visits = intval($rows[0][0]);
             } catch (\Google_AuthException $e) {
-                $visits=0;
+                $visits = 0;
             }
 
             //save cache (TTL 1h)
             $this->cache->save($cacheKey, $visits, $this->config['cache']['cache_lifetime']);
 
             //save access token
-            $this -> saveAccessToken();
+            $this->saveAccessToken();
         }
 
         return $visits;

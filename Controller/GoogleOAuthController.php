@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
-
 /**
  * @Route("/google/analytics")
  */
@@ -25,7 +24,7 @@ class GoogleOAuthController extends Controller
         $token = $this->get('happyr.google.analytics.token')->getToken();
 
         return array(
-            'authenticated'=>$token!=null,
+            'authenticated' => $token != null,
         );
     }
 
@@ -38,7 +37,7 @@ class GoogleOAuthController extends Controller
     public function oauth2callbackAction()
     {
         //authenticate
-        $client=$this->get('happyr.google.api.client');
+        $client = $this->get('happyr.google.api.client');
         $client->authenticate();
 
         //save token
@@ -55,8 +54,8 @@ class GoogleOAuthController extends Controller
      */
     public function authenticateAction()
     {
-        $client=$this->get('happyr.google.api.analytics')->client;
-        $authUrl = $client -> createAuthUrl();
+        $client = $this->get('happyr.google.api.analytics')->client;
+        $authUrl = $client->createAuthUrl();
 
         return $this->redirect($authUrl);
     }

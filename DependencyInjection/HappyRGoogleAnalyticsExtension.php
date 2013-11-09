@@ -8,7 +8,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 
-
 /**
  * This is the class that loads and manages your bundle configuration
  *
@@ -32,21 +31,23 @@ class HappyRGoogleAnalyticsExtension extends Extension
         $container->setParameter('happy_r_google_analytics.tracker', $config['tracker']);
 
         //if tracker is not enabled, use the dummy
-        if(!$config['tracker_enabled']){
-            $container->setParameter('happyr.google.analytics.tracker.class',
-                'HappyR\Google\AnalyticsBundle\Services\TrackerDummyService');
+        if (!$config['tracker_enabled']) {
+            $container->setParameter(
+                'happyr.google.analytics.tracker.class',
+                'HappyR\Google\AnalyticsBundle\Services\TrackerDummyService'
+            );
         }
 
-        switch($config['cache']['service']){
+        switch ($config['cache']['service']) {
             case 'doctrine':
-                if (!isset($config['cache']['doctrine_class'])){
-                    throw new \LogicException('When using the "doctrine" as cache.service, the "cache.doctrine_class"'.
-                    ' config parameter must be set.');
+                if (!isset($config['cache']['doctrine_class'])) {
+                    throw new \LogicException('When using the "doctrine" as cache.service, the "cache.doctrine_class"' .
+                        ' config parameter must be set.');
                 }
 
                 //check if doctrine exists
-                if(!class_exists($config['cache']['doctrine_class'])){
-                    throw new \LogicException('The class "'.$config['cache']['doctrine_class'].'" does not exist.');
+                if (!class_exists($config['cache']['doctrine_class'])) {
+                    throw new \LogicException('The class "' . $config['cache']['doctrine_class'] . '" does not exist.');
                 }
 
                 $container->setParameter(
@@ -58,16 +59,12 @@ class HappyRGoogleAnalyticsExtension extends Extension
                 break;
             default:
                 $cacheService = new Reference($config['cache']['service']);
-
-
         }
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
         $container->getDefinition('happyr.google.analytics.page_statistics')
             ->replaceArgument(2, $cacheService);
-
-
     }
 }

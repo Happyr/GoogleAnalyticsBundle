@@ -13,11 +13,10 @@ use UnitedPrototype\GoogleAnalytics\Session;
 use UnitedPrototype\GoogleAnalytics\SocialInteraction;
 use UnitedPrototype\GoogleAnalytics\Visitor;
 
-
 use UnitedPrototype\GoogleAnalytics\Tracker as api;
 
 /**
- * 
+ *
  * This class encapsulate the tracker from the lib
  */
 class TrackerService
@@ -45,21 +44,19 @@ class TrackerService
      */
     protected $visitor;
 
-
     /**
      *
      * @param string $profileId might be "UA-12345678-9"
      * @param string $host might be "example.com"
      * @param array $config
      */
-    function __construct($profileId, $host, array $config=array())
+    function __construct($profileId, $host, array $config = array())
     {
-        $this->api=new Api($profileId, $host, new Config($config));
+        $this->api = new Api($profileId, $host, new Config($config));
 
-        $this->session=new Session();
-        $this->visitor=new Visitor();
+        $this->session = new Session();
+        $this->visitor = new Visitor();
     }
-
 
     /**
      * Track page view
@@ -69,10 +66,10 @@ class TrackerService
      *
      * @return mixed
      */
-    public function trackPageview($url, $title=null)
+    public function trackPageview($url, $title = null)
     {
-        $page=new Page($url);
-        if($title!=null){
+        $page = new Page($url);
+        if ($title != null) {
             $page->setTitle($title);
         }
 
@@ -93,13 +90,12 @@ class TrackerService
      *
      * @return mixed
      */
-    public function trackEvent($category, $action, $label=null, $value=null, $nonInteraction=false)
+    public function trackEvent($category, $action, $label = null, $value = null, $nonInteraction = false)
     {
-        $event=new Event($category, $action, $label, $value, $nonInteraction);
+        $event = new Event($category, $action, $label, $value, $nonInteraction);
 
         return $this->api->trackEvent($event, $this->session, $this->visitor);
     }
-
 
     /**
      *
@@ -112,7 +108,7 @@ class TrackerService
      */
     public function trackSocial($network = null, $action = null, $target = null)
     {
-        $social=new SocialInteraction($network, $action, $target);
+        $social = new SocialInteraction($network, $action, $target);
 
         return $this->api->trackSocial($social, $this->session, $this->visitor);
     }
@@ -128,8 +124,6 @@ class TrackerService
     {
         return $this->api->trackTransaction($trans, $this->session, $this->visitor);
     }
-
-
 
     /**
      *
@@ -155,8 +149,4 @@ class TrackerService
     {
         return $this->request;
     }
-
-
-
-
 }

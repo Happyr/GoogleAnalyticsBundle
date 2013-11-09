@@ -6,16 +6,16 @@
 
     <target name="phpunit" description="Run unit tests with PHPUnit">
         <exec executable="phpunit" failonerror="true">
-            <arg line="-c ${basedir}/phpunit.xml.dist" />
+            <arg line="-c ${basedir}/phpunit.xml.dist"/>
         </exec>
     </target>
 
     <!-- The composer does also clear the cache -->
     <target name="composer" description="Update vendors">
         <exec executable="composer" failonerror="true">
-            <arg value="update" />
-            <arg value="--working-dir" />
-            <arg path="${basedir}" />
+            <arg value="update"/>
+            <arg value="--working-dir"/>
+            <arg path="${basedir}"/>
         </exec>
     </target>
 

@@ -1,8 +1,8 @@
 <?php
 
 
-if (file_exists($file = __DIR__.'/autoload.php')) {
+if (file_exists($file = __DIR__ . '/autoload.php')) {
     include_once $file;
-} elseif (file_exists($file = __DIR__.'/autoload.php.dist')) {
+} elseif (file_exists($file = __DIR__ . '/autoload.php.dist')) {
     include_once $file;
 }

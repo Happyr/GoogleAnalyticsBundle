@@ -9,11 +9,11 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         codecoverage= "true"
+         codecoverage="true"
          bootstrap="Tests/bootstrap.php"
         >
 
-    <formatter type="clover" usefile="false" />
+    <formatter type="clover" usefile="false"/>
     <testsuites>
         <testsuite name="HappyR Google Analytics Test Suite">
             <directory>./Tests</directory>
@@ -21,7 +21,8 @@
     </testsuites>
 
     <listeners>
-        <listener class="\Mockery\Adapter\Phpunit\TestListener" file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php">
+        <listener class="\Mockery\Adapter\Phpunit\TestListener"
+                  file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php">
         </listener>
     </listeners>
 

@@ -2,8 +2,8 @@
 
 
 namespace HappyR\Google\AnalyticsBundle\CacheServices;
-use Doctrine\Common\Cache\CacheProvider;
 
+use Doctrine\Common\Cache\CacheProvider;
 
 /**
  * Class DoctrineCache
@@ -28,7 +28,6 @@ class DoctrineCache implements CacheInterface
     {
         $this->cache = $cache;
     }
-
 
     /**
      * The namespace of the cache
@@ -67,5 +66,4 @@ class DoctrineCache implements CacheInterface
     {
         return $this->cache->save($id, $data, $lifeTime);
     }
-
 }

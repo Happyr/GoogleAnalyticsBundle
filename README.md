@@ -72,7 +72,12 @@ happy_r_google_analytics:
 
 You do also need to configure the HappyRGoogleApiBundle. I recommend you to have a look at [its configuration][3].
 
+## Usage
+
+You will find some examples of how you use the bundle [here][4].
+
 
 [1]: http://happyrecruiting.se
 [2]: http://developer.happyr.se
 [3]: http://developer.happyr.se/symfony2-bundles/google-api-bundle
+[4]: http://developer.happyr.se/symfony2-bundles/google-analytics-bundle/usage-examples

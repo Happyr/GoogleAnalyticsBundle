@@ -68,7 +68,7 @@ class PageStatisticsService
      * return the page views for the given url
      *
      * @param string $uri
-     * @param null $since
+     * @param string $since date on format ('Y-m-d')
      * @param string $regex
      *
      * @return int
@@ -80,8 +80,9 @@ class PageStatisticsService
             $since = date('Y-m-d', time() - 86400 * 365);
         }
 
+        //create the cache key
+        $cacheKey = md5($uri.$regex.$since);
         $this->cache->setNamespace('PageStatistics.PageViews');
-        $cacheKey = md5($uri . $since) . time();
         if (false === ($visits = $this->cache->fetch($cacheKey))) {
             //check if we got a token
             if (!$this->hasAccessToken()) {

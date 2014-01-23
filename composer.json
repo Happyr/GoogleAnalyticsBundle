@@ -16,6 +16,7 @@
         "symfony/framework-bundle": "2.*",
         "symfony/yaml": "2.*",
         "happyr/google-api-bundle": "2.*",
+        "google/apiclient": "@beta",
         "unitedprototype/php-ga": "dev-master"
     },
     "require-dev": {

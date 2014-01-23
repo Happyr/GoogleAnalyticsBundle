@@ -30,7 +30,8 @@ following lines. I have contacted the authors of these libraries and are waiting
     require: {
         // ...
         "happyr/google-analytics-bundle": "dev-master",
-            "unitedprototype/php-ga": "@dev"
+        "unitedprototype/php-ga": "@dev",
+        "google/apiclient": "@beta",
     }
 }
 ```

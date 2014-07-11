@@ -67,7 +67,7 @@ $bundles = array(
 
 happy_r_google_analytics:
     // ...
-    profile_id: 12345678 # The google analytics profile id. This is not the same as the tracking code.
+    profile_id: 12345678 # The google analytics view id. This is not the same as the tracking code.
     token_file_path: %kernel.root_dir%/var/storage   #The path where to save a temporary token
 ```
 

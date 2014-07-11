@@ -38,7 +38,7 @@ class TrackerService
     protected $session;
 
     /**
-     * @var Visistor visitor
+     * @var Visitor visitor
      *
      *
      */
@@ -61,7 +61,7 @@ class TrackerService
     /**
      * Track page view
      *
-     * @param sring $url
+     * @param string $url
      * @param string $title
      *
      * @return mixed
@@ -100,17 +100,21 @@ class TrackerService
     /**
      *
      *
+     * @param Page|string $page is a Page object or string URL
      * @param null $network
      * @param null $action
      * @param null $target
      *
-     * @return mixed
      */
-    public function trackSocial($network = null, $action = null, $target = null)
+    public function trackSocial($page, $network = null, $action = null, $target = null)
     {
+        if (is_string($page)) {
+            $page = new Page($page);
+        }
+
         $social = new SocialInteraction($network, $action, $target);
 
-        return $this->api->trackSocial($social, $this->session, $this->visitor);
+        return $this->api->trackSocial($social, $page, $this->session, $this->visitor);
     }
 
     /**

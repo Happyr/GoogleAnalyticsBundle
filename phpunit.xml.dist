@@ -15,16 +15,10 @@
 
     <formatter type="clover" usefile="false"/>
     <testsuites>
-        <testsuite name="Happyr Google Analytics Test Suite">
+        <testsuite name="Happyr Test Suite">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>
-
-    <listeners>
-        <listener class="\Mockery\Adapter\Phpunit\TestListener"
-                  file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php">
-        </listener>
-    </listeners>
 
     <filter>
         <blacklist>
@@ -43,6 +37,4 @@
         <log type="coverage-clover" target="build/logs/phpunit.coverage.xml"/>
         <log type="junit" target="build/logs/phpunit.xml" logIncompleteSkipped="false"/>
     </logging>
-
-
 </phpunit>

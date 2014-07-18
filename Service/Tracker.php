@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Happyr\Google\AnalyticsBundle\Service;
 
 use Happyr\Google\AnalyticsBundle\Http\HttpClientInterface;

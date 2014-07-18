@@ -1,6 +1,6 @@
 <?php
 
-namespace HappyR\Google\AnalyticsBundle\DependencyInjection;
+namespace Happyr\Google\AnalyticsBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -17,26 +17,19 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('happy_r_google_analytics');
+        $rootNode = $treeBuilder->root('happyr_google_analytics');
 
         $rootNode
             ->children()
-            ->scalarNode('profile_id')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('host')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('token_file_path')->isRequired()->cannotBeEmpty()->end()
-            ->booleanNode('tracker_enabled')->defaultTrue()->end()
-            ->scalarNode('tracker_id')->isRequired()->cannotBeEmpty()->end()
-            ->arrayNode('tracker')->addDefaultsIfNotSet()->children()
+            ->scalarNode('version')->isRequired()->cannotBeEmpty()->defaultValue(1)->end()
+            ->booleanNode('enabled')->defaultTrue()->end()
+            ->scalarNode('tracking_id')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com//collect')->isRequired()->cannotBeEmpty()->end()
+/*
             ->floatNode('requestTimeout')->defaultValue(1)->end()
             ->booleanNode('sendOnShutdown')->defaultFalse()->end()
             ->booleanNode('fireAndForget')->defaultFalse()->end()
-            ->booleanNode('anonymizeIpAddresses')->defaultFalse()->end()
-            ->end()->end()
-            ->arrayNode('cache')->addDefaultsIfNotSet()->children()
-            ->integerNode('cache_lifetime')->defaultValue(3600)->end()
-            ->scalarNode('service')->defaultValue('happyr.google.analytics.cache.dummy')->isRequired()->end()
-            ->scalarNode('doctrine_class')->defaultValue('Doctrine\Common\Cache\ApcCache')->end()
-            ->end()
+*/
 
             ->end()->end();
 

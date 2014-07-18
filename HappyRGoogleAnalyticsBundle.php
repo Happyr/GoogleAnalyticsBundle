@@ -1,14 +1,14 @@
 <?php
 
-namespace HappyR\Google\AnalyticsBundle;
+namespace Happyr\Google\AnalyticsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class HappyRGoogleAnalyticsBundle
+ * Class HappyrGoogleAnalyticsBundle
  *
  * This bundle pushes and fetches data to/from google analytics
  */
-class HappyRGoogleAnalyticsBundle extends Bundle
+class HappyrGoogleAnalyticsBundle extends Bundle
 {
 }

@@ -1,28 +1,17 @@
 parameters:
-  happyr.google.analytics.page_statistics.class: 'HappyR\Google\AnalyticsBundle\Services\PageStatisticsService'
-  happyr.google.analytics.token.class: 'HappyR\Google\AnalyticsBundle\Services\TokenService'
-  happyr.google.analytics.tracker.class: 'HappyR\Google\AnalyticsBundle\Services\TrackerService'
-  happyr.google.analytics.cache.doctrine_class: 'Doctrine\Common\Cache\ApcCache'
+  happyr.google.analytics.tracker.class: 'Happyr\Google\AnalyticsBundle\Service\Tracker'
+  happyr.google.analytics.http.client.class: 'Happyr\Google\AnalyticsBundle\Http\HttpClient'
+  happyr.google.analytics.http.dummy.class: 'Happyr\Google\AnalyticsBundle\Http\Dummy'
 
 services:
-  happyr.google.analytics.page_statistics:
-    class: %happyr.google.analytics.page_statistics.class%
-    arguments: [@happyr.google.api.analytics, @happyr.google.analytics.token, @happyr.google.analytics.cache.dummy, %happy_r_google_analytics%]
-
-  happyr.google.analytics.token:
-    class: %happyr.google.analytics.token.class%
-    arguments: [%happy_r_google_analytics.token_file_path%]
-
   happyr.google.analytics.tracker:
     class: %happyr.google.analytics.tracker.class%
-    arguments: [%happy_r_google_analytics.tracker_id%, %happy_r_google_analytics.host%, %happy_r_google_analytics.tracker%]
+    arguments: [@happyr.google.analytics.http.client, ~, ~]
 
-  happyr.google.analytics.cache.dummy:
-    class: HappyR\Google\AnalyticsBundle\CacheServices\DummyCache
+  happyr.google.analytics.http.client:
+    class: %happyr.google.analytics.http.client.class%
+    arguments: [~]
 
-  happyr.google.analytics.cache.doctrine:
-    class: HappyR\Google\AnalyticsBundle\CacheServices\DoctrineCache
-    arguments: [@happyr.google.analytics.cache.doctrine_class]
-
-  happyr.google.analytics.cache.doctrine_class:
-    class: %happyr.google.analytics.cache.doctrine_class%
+  happyr.google.analytics.http.dummy:
+    class: %happyr.google.analytics.http.dummy.class%
+    arguments: []

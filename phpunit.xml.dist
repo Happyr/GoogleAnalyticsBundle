@@ -15,7 +15,7 @@
 
     <formatter type="clover" usefile="false"/>
     <testsuites>
-        <testsuite name="HappyR Google Analytics Test Suite">
+        <testsuite name="Happyr Google Analytics Test Suite">
             <directory>./Tests</directory>
         </testsuite>
     </testsuites>

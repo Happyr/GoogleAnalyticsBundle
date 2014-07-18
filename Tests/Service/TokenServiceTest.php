@@ -1,7 +1,7 @@
 <?php
 
 
-namespace HappyR\Google\AnalyticsBundle\Tests\Services;
+namespace Happyr\Google\AnalyticsBundle\Tests\Service;
 
 /**
  * Class TokenServiceTest

@@ -21,10 +21,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('version')->isRequired()->cannotBeEmpty()->defaultValue(1)->end()
+            ->scalarNode('version')->cannotBeEmpty()->defaultValue(1)->end()
             ->booleanNode('enabled')->defaultTrue()->end()
             ->scalarNode('tracking_id')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com//collect')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com//collect')->cannotBeEmpty()->end()
 /*
             ->floatNode('requestTimeout')->defaultValue(1)->end()
             ->booleanNode('sendOnShutdown')->defaultFalse()->end()

@@ -30,7 +30,7 @@ class HappyrGoogleAnalyticsExtension extends Extension
             ->replaceArgument(0, $config['endpoint']);
 
         $container->getDefinition('happyr.google.analytics.tracker')
-            ->replaceArgument(1, $config['tracker_id'])
+            ->replaceArgument(1, $config['tracking_id'])
             ->replaceArgument(2, $config['version']);
 
         if (!$config['enabled']) {

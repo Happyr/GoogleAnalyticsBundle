@@ -40,15 +40,23 @@ class Tracker
     protected $client;
 
     /**
+     * @var ClientIdProvider clientIdProvider
+     *
+     */
+    protected $clientIdProvider;
+
+    /**
      * @param HttpClientInterface $client
+     * @param ClientIdProvider $cip
      * @param string $trackerId
      * @param string $version
      */
-    public function __construct(HttpClientInterface $client, $trackerId, $version)
+    public function __construct(HttpClientInterface $client, ClientIdProvider $cip, $trackerId, $version)
     {
         $this->client = $client;
         $this->trackerId = $trackerId;
         $this->version = $version;
+        $this->clientIdProvider = $cip;
     }
 
     /**
@@ -59,9 +67,9 @@ class Tracker
      *
      * @return bool
      */
-    public function send($data, $hitType=null)
+    public function send($data, $hitType = null)
     {
-        if (empty($data['t']) && $hitType!==null) {
+        if (empty($data['t']) && $hitType !== null) {
             $data['t'] = $hitType;
         }
 
@@ -70,10 +78,23 @@ class Tracker
         return $this->client->send($data);
     }
 
-
+    /**
+     * Get client id from cookie... if we can
+     *
+     *
+     * @return false|mixed|string
+     */
     protected function getClientId()
     {
-        return 'abc';
+        if ($this->clientId == null) {
+            if (false == $this->clientId = $this->clientIdProvider->getClientIdFormCookie()) {
+
+                //TODO randomize..
+                $this->clientId = 'abc';
+            }
+        }
+
+        return $this->clientId;
     }
 
     /**

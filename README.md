@@ -3,12 +3,27 @@ Google Analytics Bundle
 
 GoogleAnalyticsBundle is a Symfony2 bundle that helps you to push data to Google Analytics.
 It could be data like pageview, events etc. It is a bundle implementation of
-[the Measurement Protocol](https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide)
+the [Measurement Protocol][devguide]
 
 This is not a library to pull data from Google analytics. That feature is deprecated from the `classic-analytics` branch.
 The master branch and version 3 and above will be supporting Google analytics universal.
 
 ## Usage
+
+Read the documentation of the [protocol][devguide].
+
+``` php
+
+//in some container aware class
+$tracker = $this->get('happyr.google.analytics.tracker');
+$data=array(
+    'dh'=>'mydemo.com',
+    'dp'=>'/home',
+    'dt'=>'homepage',
+);
+$tracker->send($data, 'pageview');
+
+```
 
 ## Installation
 
@@ -44,3 +59,4 @@ happyr_google_analytics:
     tracking_id: UA-XXXX-Y
 ```
 
+[devguide]: https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide

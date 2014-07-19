@@ -93,7 +93,7 @@ class Tracker
                 /*
                  * We could not find any cookie with a client id. We just have to randomize one
                  */
-                $this->clientId = mt_rand(10, 1000).microtime();
+                $this->clientId = mt_rand(10, 1000).round(microtime(true));
             }
         }
 

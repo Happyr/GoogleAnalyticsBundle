@@ -15,13 +15,13 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testExtractCookie()
     {
-        $provider = new Dummy();
+        $provider = new ProviderDummy();
 
         $this->assertEquals('1110480476', $provider->extractCookie('GA1.2.1110480476.1405690517'));
         $this->assertEquals('286403989', $provider->extractCookie('1.2.286403989.1366364567'));
     }
 }
-class Dummy extends ClientIdProvider
+class ProviderDummy extends ClientIdProvider
 {
     public function extractCookie($cookieValue)
     {

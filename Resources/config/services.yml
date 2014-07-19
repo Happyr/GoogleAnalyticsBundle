@@ -11,7 +11,11 @@ services:
 
   happyr.google.analytics.http.client:
     class: %happyr.google.analytics.http.client.class%
-    arguments: [~]
+    arguments:
+      - %happyr.google.analytics.param.endpoint%
+      - %happyr.google.analytics.param.fireAndForget%
+      - %happyr.google.analytics.param.requestTimeout%
+
 
   happyr.google.analytics.http.dummy:
     class: %happyr.google.analytics.http.dummy.class%

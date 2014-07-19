@@ -25,12 +25,8 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('enabled')->defaultTrue()->end()
             ->scalarNode('tracking_id')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com//collect')->cannotBeEmpty()->end()
-/*
-            ->floatNode('requestTimeout')->defaultValue(1)->end()
-            ->booleanNode('sendOnShutdown')->defaultFalse()->end()
             ->booleanNode('fireAndForget')->defaultFalse()->end()
-*/
-
+            ->floatNode('requestTimeout')->defaultValue(1)->end()
             ->end()->end();
 
         return $treeBuilder;

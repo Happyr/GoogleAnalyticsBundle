@@ -23,19 +23,21 @@ class HappyrGoogleAnalyticsExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $base='happyr.google.analytics.param.';
+        $container->setParameter($base.'endpoint', $config['endpoint']);
+        $container->setParameter($base.'fireAndForget', $config['fireAndForget']);
+        $container->setParameter($base.'requestTimeout', $config['requestTimeout']);
+
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->getDefinition('happyr.google.analytics.http.client')
-            ->replaceArgument(0, $config['endpoint']);
 
-        $container->getDefinition('happyr.google.analytics.tracker')
-            ->replaceArgument(2, $config['tracking_id'])
+        $trackerDef=$container->getDefinition('happyr.google.analytics.tracker');
+        $trackerDef->replaceArgument(2, $config['tracking_id'])
             ->replaceArgument(3, $config['version']);
 
         if (!$config['enabled']) {
-            $container->getDefinition('happyr.google.analytics.tracker')
-                ->replaceArgument(0, new Reference('happyr.google.analytics.http.dummy'));
+            $trackerDef->replaceArgument(0, new Reference('happyr.google.analytics.http.dummy'));
         }
     }
 }

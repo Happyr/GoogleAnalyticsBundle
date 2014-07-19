@@ -18,6 +18,11 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             'baz'=>'biz',
             'bax'=>'foo',
         );
+
+
+        $request=$this->getMockBuilder('GuzzleHttp\Message\Request')
+            ->disableOriginalConstructor()
+            ->getMock();
         $response=$this->getMockBuilder('GuzzleHttp\Message\Response')
             ->setMethods(array('getStatusCode'))
             ->disableOriginalConstructor()
@@ -27,12 +32,12 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->willReturn('200');
 
         $guzzleClient=$this->getMockBuilder('GuzzleHttp\Client')
-            ->setMethods(array('post'))
+            ->setMethods(array('createRequest', 'send'))
             ->disableOriginalConstructor()
             ->getMock();
         $guzzleClient->expects($this->once())
-            ->method('post')
-            ->with($this->equalTo($endpoint), $this->callback(function ($param) use ($data) {
+            ->method('createRequest')
+            ->with($this->equalTo('POST'), $this->equalTo($endpoint), $this->callback(function ($param) use ($data) {
                 //make sure the data is in the body post
                 foreach($data as $k=>$v) {
                     if(!isset($param['body'][$k]) || $param['body'][$k]!==$v) {
@@ -41,11 +46,16 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
                 }
                 return true;
             }))
+            ->willReturn($request);
+        $guzzleClient->expects($this->once())
+            ->method('send')
+            ->with($this->equalTo($request))
             ->willReturn($response);
+
 
         $httpClient=$this->getMockBuilder('Happyr\Google\AnalyticsBundle\Http\HttpClient')
             ->setMethods(array('getClient'))
-            ->setConstructorArgs(array($endpoint))
+            ->setConstructorArgs(array($endpoint, false, 1))
             ->getMock();
         $httpClient->expects($this->once())
             ->method('getClient')

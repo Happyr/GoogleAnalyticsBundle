@@ -4,6 +4,7 @@
 namespace Happyr\Google\AnalyticsBundle\Http;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Happyr\Google\AnalyticsBundle\Http\HttpClientInterface;
 
 /**
@@ -22,6 +23,19 @@ class HttpClient implements HttpClientInterface
     protected $endpoint;
 
     /**
+     * @var integer requestTimeout
+     *
+     */
+    protected $requestTimeout;
+
+    /**
+     * @var boolean fireAndForget
+     *
+     * Should we bother about the response or not?
+     */
+    protected $fireAndForget;
+
+    /**
      * @var Client client
      *
      */
@@ -29,10 +43,14 @@ class HttpClient implements HttpClientInterface
 
     /**
      * @param string $endpoint
+     * @param boolean $fireAndForget
+     * @param integer $requestTimeout
      */
-    public function __construct($endpoint)
+    public function __construct($endpoint, $fireAndForget, $requestTimeout)
     {
         $this->endpoint = $endpoint;
+        $this->fireAndForget = $fireAndForget;
+        $this->requestTimeout = $requestTimeout;
     }
 
     protected function getClient()
@@ -51,10 +69,28 @@ class HttpClient implements HttpClientInterface
      *
      * @return bool
      */
-    public function send(array $data=array())
+    public function send(array $data = array())
     {
-        $response=$this->getClient()->post($this->endpoint, array('body'=>$data));
+        $client = $this->getClient();
+        $options = array(
+            'body' => $data,
+            'timeout' => $this->requestTimeout,
+        );
+        $request = $client->createRequest('POST', $this->endpoint, $options);
 
-        return $response->getStatusCode()=='200';
+        // If we should send the async or not.
+        if ($this->fireAndForget) {
+            $client->sendAll(array($request));
+
+            return true;
+        }
+
+        try {
+            $response = $client->send($request);
+        } catch (RequestException $e) {
+            return false;
+        }
+
+        return $response->getStatusCode() == '200';
     }
 }

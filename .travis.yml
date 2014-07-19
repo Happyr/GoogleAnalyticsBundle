@@ -9,11 +9,19 @@ php:
 env:
   - SYMFONY_VERSION=2.3.*
 
-before_script:
-  - composer self-update
-  - composer require symfony/symfony:${SYMFONY_VERSION} --prefer-source
+install:
+  - composer require --no-update satooshi/php-coveralls:~0.6@stable
+  - composer require --no-update symfony/symfony:${SYMFONY_VERSION} --prefer-source
+  - composer update
 
-script: phpunit --coverage-text
+before_script:
+  - mkdir -p build/logs
+
+script:
+  - phpunit --coverage-text --coverage-clover build/logs/clover.xml
+
+after_success:
+  - sh -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then php vendor/bin/coveralls -v; fi;'
 
 matrix:
   allow_failures:

@@ -36,10 +36,12 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             ->with($data)
             ->willReturn(true);
 
+        $clientIdProvider=$this->getMock('Happyr\Google\AnalyticsBundle\Service\ClientIdProvider');
+
         $tracker = $this->getMockBuilder('Happyr\Google\AnalyticsBundle\Service\Tracker')
             ->setMethods(array('getClientId'))
             ->enableOriginalConstructor()
-            ->setConstructorArgs(array($httpClient, $trackerId, $version))
+            ->setConstructorArgs(array($httpClient, $clientIdProvider, $trackerId, $version))
             ->getMock();
 
         $tracker->expects($this->once())

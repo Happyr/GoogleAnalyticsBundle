@@ -87,10 +87,13 @@ class Tracker
     protected function getClientId()
     {
         if ($this->clientId == null) {
+            //Try to get new client id from cookie
             if (false == $this->clientId = $this->clientIdProvider->getClientIdFormCookie()) {
 
-                //TODO randomize..
-                $this->clientId = 'abc';
+                /*
+                 * We could not find any cookie with a client id. We just have to randomize one
+                 */
+                $this->clientId = mt_rand(10, 1000).microtime();
             }
         }
 

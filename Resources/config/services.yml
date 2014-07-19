@@ -2,11 +2,12 @@ parameters:
   happyr.google.analytics.tracker.class: 'Happyr\Google\AnalyticsBundle\Service\Tracker'
   happyr.google.analytics.http.client.class: 'Happyr\Google\AnalyticsBundle\Http\HttpClient'
   happyr.google.analytics.http.dummy.class: 'Happyr\Google\AnalyticsBundle\Http\Dummy'
+  happyr.google.analytics.clientIdProvider.class: 'Happyr\Google\AnalyticsBundle\Service\ClientIdProvider'
 
 services:
   happyr.google.analytics.tracker:
     class: %happyr.google.analytics.tracker.class%
-    arguments: [@happyr.google.analytics.http.client, ~, ~]
+    arguments: [@happyr.google.analytics.http.client, @happyr.google.analytics.clientIdProvider, ~, ~]
 
   happyr.google.analytics.http.client:
     class: %happyr.google.analytics.http.client.class%
@@ -15,3 +16,8 @@ services:
   happyr.google.analytics.http.dummy:
     class: %happyr.google.analytics.http.dummy.class%
     arguments: []
+
+  happyr.google.analytics.clientIdProvider:
+    class: %happyr.google.analytics.clientIdProvider.class%
+    calls:
+      - [setRequest, ['@?request=']]

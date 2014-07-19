@@ -53,8 +53,8 @@ class HttpClient implements HttpClientInterface
      */
     public function send(array $data=array())
     {
-        $response=$this->getClient()->post($this->endpoint, $data);
+        $response=$this->getClient()->post($this->endpoint, array('body'=>$data));
 
-        return true;
+        return $response->getStatusCode()=='200';
     }
 }

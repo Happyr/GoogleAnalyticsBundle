@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * Class HappyrGoogleAnalyticsBundle
  *
- * This bundle pushes and fetches data to/from google analytics
+ * This bundle pushes data to google analytics
  */
 class HappyrGoogleAnalyticsBundle extends Bundle
 {

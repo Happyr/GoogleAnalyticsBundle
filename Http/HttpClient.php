@@ -1,11 +1,9 @@
 <?php
 
-
 namespace Happyr\Google\AnalyticsBundle\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use Happyr\Google\AnalyticsBundle\Http\HttpClientInterface;
 
 /**
  * Class Tracker
@@ -53,6 +51,10 @@ class HttpClient implements HttpClientInterface
         $this->requestTimeout = $requestTimeout;
     }
 
+    /**
+     * Get a GuzzleClient
+     * @return Client
+     */
     protected function getClient()
     {
         if ($this->client === null) {

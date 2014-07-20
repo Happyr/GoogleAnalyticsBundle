@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ClientIdProvider
 {
-    const COOKIE_NAME='_ga';
+    const COOKIE_NAME = '_ga';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request request
@@ -55,9 +55,10 @@ class ClientIdProvider
      *
      * The contents of the cookie might be "GA1.2.1110480476.1405690517"
      * The 3rd section is the client id.
-     * @link http://stackoverflow.com/a/16107194/1526789
      *
      * @param $cookieValue
+     *
+     * @link http://stackoverflow.com/a/16107194/1526789
      *
      * @return string|bool clientId or boolean false
      */

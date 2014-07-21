@@ -31,8 +31,8 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
     {
         $provider = new ProviderDummy();
 
-        $this->assertEquals('1110480476', $provider->extractCookie('GA1.2.1110480476.1405690517'));
-        $this->assertEquals('286403989', $provider->extractCookie('1.2.286403989.1366364567'));
+        $this->assertEquals('1110480476.1405690517', $provider->extractCookie('GA1.2.1110480476.1405690517'));
+        $this->assertEquals('286403989.1366364567', $provider->extractCookie('1.2.286403989.1366364567'));
     }
 }
 class ProviderDummy extends ClientIdProvider

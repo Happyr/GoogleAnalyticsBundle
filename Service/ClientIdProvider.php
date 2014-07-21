@@ -66,14 +66,16 @@ class ClientIdProvider
         }
         $value = $cookies->get(self::COOKIE_NAME);
 
-        return $value;
+        return $this->extractCookie($value);
     }
 
     /**
-     * The client id is the cookie value. This function extract the user id.
+     * Get the client id from the cookie value.
      *
      * The contents of the cookie might be "GA1.2.1110480476.1405690517"
      * The 3rd section is the user id.
+     * The 4th section is the session id.
+     * The client id is the user id + the session id
      *
      * @param $cookieValue
      *
@@ -83,7 +85,7 @@ class ClientIdProvider
      */
     protected function extractCookie($cookieValue)
     {
-        if (!preg_match('|[^\.]+\.[^\.]+\.([^\.]+)\.[^\.]+|si', $cookieValue, $matches)) {
+        if (!preg_match('|[^\.]+\.[^\.]+\.([^\.]+\.[^\.]+)|si', $cookieValue, $matches)) {
             //match not found
             return false;
         }

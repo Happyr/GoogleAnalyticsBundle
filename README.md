@@ -8,6 +8,12 @@ the [Measurement Protocol][devguide]
 This is not a library to pull data from Google analytics. That feature is deprecated from the `classic-analytics` branch.
 The master branch and version 3 and above will be supporting Google analytics universal.
 
+## Special feature
+
+This bundle has a special feature. Say that you want to post data to Analytics. You want to post an event every time someone downloads a file. You may do that from the server like any other library. When looking at the reports you will find that you are missing the information about the actual user for the download event. You can not use a segment to find out which referal the user came from. 
+
+This bundle helps you with just that. Before we submit any data we look at the `_ga` cookie to find the user's clientId. So now you may use segments and advanced queries to analytics and you will get the expected result. 
+
 ## Usage
 
 Read the documentation of the [protocol][devguide].

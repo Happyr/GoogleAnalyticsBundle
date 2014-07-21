@@ -55,13 +55,14 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetClientId()
     {
+        $clientId='foobar';
         $provider = $this->getMockBuilder('Happyr\Google\AnalyticsBundle\Service\ClientIdProvider')
-            ->setMethods(array('getClientIdFormCookie'))
+            ->setMethods(array('getClientId'))
             ->disableOriginalConstructor()
             ->getMock();
         $provider->expects($this->once())
-            ->method('getClientIdFormCookie')
-            ->willReturn(false);
+            ->method('getClientId')
+            ->willReturn($clientId);
 
         $tracker = new TrackerDummy(
             $this->getMock('Happyr\Google\AnalyticsBundle\Http\HttpClientInterface'),
@@ -74,8 +75,6 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
         $secondResult=$tracker->getClientId();
 
         $this->assertEquals($firstResult, $secondResult, 'getClientId must return the same ID at every call');
-        $this->assertRegExp('|[0-9]{9}+|', $firstResult, 'Not big and random enough');
-
     }
 }
 class TrackerDummy extends Tracker

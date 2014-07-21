@@ -12,6 +12,20 @@ use Happyr\Google\AnalyticsBundle\Service\ClientIdProvider;
  */
 class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
 {
+    public function testGetClientId()
+    {
+        $provider = $this->getMockBuilder('Happyr\Google\AnalyticsBundle\Service\ClientIdProvider')
+            ->setMethods(array('getClientIdFormCookie'))
+            ->disableOriginalConstructor()
+            ->getMock();
+        $provider->expects($this->once())
+            ->method('getClientIdFormCookie')
+            ->willReturn(false);
+
+        $result=$provider->getClientId();
+
+        $this->assertRegExp('|[0-9]{9}+|', $result, 'Not big and random enough');
+    }
 
     public function testExtractCookie()
     {

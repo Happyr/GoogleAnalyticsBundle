@@ -79,28 +79,6 @@ class Tracker
     }
 
     /**
-     * Get client id from cookie... if we can
-     *
-     *
-     * @return false|mixed|string
-     */
-    protected function getClientId()
-    {
-        if ($this->clientId == null) {
-            //Try to get new client id from cookie
-            if (false == $this->clientId = $this->clientIdProvider->getClientIdFormCookie()) {
-
-                /*
-                 * We could not find any cookie with a client id. We just have to randomize one
-                 */
-                $this->clientId = mt_rand(10, 1000) . round(microtime(true));
-            }
-        }
-
-        return $this->clientId;
-    }
-
-    /**
      * Append the default parameters
      *
      * @param array $data
@@ -119,5 +97,18 @@ class Tracker
         if (empty($data['cid'])) {
             $data['cid'] = $this->getClientId();
         }
+    }
+
+    /**
+     *
+     * @return string
+     */
+    protected function getClientId()
+    {
+        if ($this->clientId === null) {
+            $this->clientId = $this->clientIdProvider->getClientId();
+        }
+
+        return $this->clientId;
     }
 }

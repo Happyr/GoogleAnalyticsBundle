@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('version')->cannotBeEmpty()->defaultValue(1)->end()
             ->booleanNode('enabled')->defaultTrue()->end()
             ->scalarNode('tracking_id')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com//collect')->cannotBeEmpty()->end()
+            ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com/collect')->cannotBeEmpty()->end()
             ->booleanNode('fireAndForget')->defaultFalse()->end()
             ->floatNode('requestTimeout')->defaultValue(1)->end()
             ->end()->end();

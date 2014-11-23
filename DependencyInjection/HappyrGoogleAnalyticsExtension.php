@@ -27,6 +27,8 @@ class HappyrGoogleAnalyticsExtension extends Extension
         $container->setParameter($base . 'endpoint', $config['endpoint']);
         $container->setParameter($base . 'fireAndForget', $config['fireAndForget']);
         $container->setParameter($base . 'requestTimeout', $config['requestTimeout']);
+        $container->setParameter($base . 'profile_id', $config['profile_id']);
+        $container->setParameter($base . 'cache_lifetime', $config['recache_lifetimequestTimeout']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
@@ -37,6 +39,11 @@ class HappyrGoogleAnalyticsExtension extends Extension
 
         if (!$config['enabled']) {
             $trackerDef->replaceArgument(0, new Reference('happyr.google.analytics.http.dummy'));
+        }
+
+        if ($config['cache_service']) {
+            $container->getDefinition('happyr.google.analytics.data_fetcher')
+                ->replaceArgument(0, new Reference($config['cache_service']));
         }
     }
 }

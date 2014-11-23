@@ -17,6 +17,9 @@
         "guzzlehttp/guzzle": "~4.0",
         "symfony/framework-bundle": "~2.3"
     },
+    "suggest": {
+        "happyr/google-site-authenticator-bundle": "To be able to fetch data from google analytics."
+    },
     "autoload": {
         "psr-0": {
             "Happyr\\Google\\AnalyticsBundle\\": ""

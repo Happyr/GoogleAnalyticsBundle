@@ -2,7 +2,9 @@ parameters:
   happyr.google.analytics.tracker.class: 'Happyr\Google\AnalyticsBundle\Service\Tracker'
   happyr.google.analytics.http.client.class: 'Happyr\Google\AnalyticsBundle\Http\HttpClient'
   happyr.google.analytics.http.dummy.class: 'Happyr\Google\AnalyticsBundle\Http\Dummy'
+  happyr.google.analytics.cache.dummy.class: 'Happyr\Google\AnalyticsBundle\Cache\Dummy'
   happyr.google.analytics.clientIdProvider.class: 'Happyr\Google\AnalyticsBundle\Service\ClientIdProvider'
+  happyr.google.analytics.data_fetcher.class: 'Happyr\Google\AnalyticsBundle\Service\DataFetcher'
 
 services:
   happyr.google.analytics.tracker:
@@ -16,12 +18,20 @@ services:
       - %happyr.google.analytics.param.fireAndForget%
       - %happyr.google.analytics.param.requestTimeout%
 
-
   happyr.google.analytics.http.dummy:
     class: %happyr.google.analytics.http.dummy.class%
     arguments: []
+
+  happyr.google.analytics.cache.dummy:
+      class: %happyr.google.analytics.cache.dummy.class%
+      arguments: []
 
   happyr.google.analytics.clientIdProvider:
     class: %happyr.google.analytics.clientIdProvider.class%
     calls:
       - [setRequest, ['@?request=']]
+
+  happyr.google.analytics.data_fetcher:
+    class: %happyr.google.analytics.data_fetcher.class%
+    arguments: [@happyr.google.analytics.cache.dummy, ~, %happyr.google.analytics.param.profile_id%, %happyr.google.analytics.param.cache_lifetime%]
+

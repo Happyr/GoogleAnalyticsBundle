@@ -1,6 +1,6 @@
 <?php
 
-namespace HappyR\Google\AnalyticsBundle\Services;
+namespace Happyr\Google\AnalyticsBundle\Service;
 
 use Doctrine\Common\Cache\CacheProvider;
 
@@ -22,7 +22,7 @@ class DataFetcher
     /**
      * @var int profileId
      */
-    protected $profileId;
+    protected $viewId;
 
     /**
      * @var int cacheLifetime
@@ -32,14 +32,18 @@ class DataFetcher
     /**
      * @param CacheProvider $cache
      * @param \Google_Client $client
-     * @param int $profileId
+     * @param int $viewId
      * @param int $cacheLifetime seconds
      */
-    public function __construct(CacheProvider $cache, \Google_Client $client, $profileId, $cacheLifetime)
+    public function __construct(CacheProvider $cache, \Google_Client $client=null, $viewId, $cacheLifetime)
     {
+        if (!$client) {
+            throw new \LogicException('You must install and configure happyr/google-site-authenticator-bundle in order to use the fetching data service.');
+        }
+
         $this->cache = $cache;
         $this->client = $client;
-        $this->profileId = $profileId;
+        $this->viewId = $viewId;
         $this->cacheLifetime = $cacheLifetime;
     }
 
@@ -54,6 +58,10 @@ class DataFetcher
      */
     public function getPageViews($uri, $since = null, $regex = '$')
     {
+        if (empty($this->viewId)) {
+            throw new \LogicException('You need to specify a profile id that we are going to fetch page views from');
+        }
+
         if (!$since) {
             //one year ago
             $since = date('Y-m-d', time() - 86400 * 365);
@@ -62,9 +70,9 @@ class DataFetcher
         //create the cache key
         $cacheKey = md5($uri.$regex.$since);
         $this->cache->setNamespace('PageStatistics.PageViews');
-        if (false === ($visits = $this->cache->fetch($cacheKey))) {
+        if (false === $visits = $this->cache->fetch($cacheKey)) {
             //check if we got a token
-            if (null !== $this->client->getAccessToken()) {
+            if (null === $this->client->getAccessToken()) {
                 return 0;
             }
 
@@ -75,11 +83,11 @@ class DataFetcher
             try {
                 $analytics = new \Google_Service_Analytics($this->client);
                 $results = $analytics->data_ga->get(
-                    'ga:' . $this->profileId,
+                    'ga:' . $this->viewId,
                     $since,
                     date('Y-m-d'),
                     'ga:pageviews',
-                    array('filters' => 'ga:pagePath=~^' . $uri . $regex)
+                    array('filters' => 'ga:pagePath=~^' . $uri . $regex )
                 );
 
                 $rows = $results->getRows();

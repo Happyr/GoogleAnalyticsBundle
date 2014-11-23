@@ -24,11 +24,15 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('version')->cannotBeEmpty()->defaultValue(1)->end()
             ->booleanNode('enabled')->defaultTrue()->end()
             ->scalarNode('tracking_id')->isRequired()->cannotBeEmpty()->end()
-            ->integerNode('profile_id')->defaultNull()->info('The google analytics profile id. This is not the same as the tracking code.')->end()
             ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com/collect')->cannotBeEmpty()->end()
             ->booleanNode('fireAndForget')->defaultFalse()->end()
             ->floatNode('requestTimeout')->defaultValue(1)->end()
-            ->floatNode('cache_service')->defaultNull()->end()
+            ->arrayNode('fetching')->addDefaultsIfNotSet()->children()
+                ->integerNode('view_id')->defaultNull()->info('The google analytics view id. This is not the same as the tracking code.')->end()
+                ->scalarNode('cache_service')->defaultNull()->end()
+                ->integerNode('cache_lifetime')->defaultValue(3600)->end()
+                ->scalarNode('client_service')->defaultNull()->end()
+            ->end()
             ->end()->end();
 
         return $treeBuilder;

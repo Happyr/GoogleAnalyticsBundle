@@ -65,4 +65,30 @@ happyr_google_analytics:
     tracking_id: UA-XXXX-Y
 ```
 
+## Fetching data
+
+If yuo want to fetch data from google analytics you must install and configure [GoogleSiteAuthenticatorBundle][siteAuth]. Read its documentaion and then configure the analytics bundle with a `client service` and a `view id`. The `view id` is found in the admin section on Google analytics. Go to Admin > Account > Proterty > View > View settings. 
+
+``` yaml
+# app/config/config.yml
+
+happyr_google_analytics:
+    // ...
+    tracking_id: UA-XXXX-Y
+    fetching:
+        client_service: 'google.client.tobias_gmail'
+        view_id: 0123456789
+        cache_service: 'doctrine_cache.providers.apc_cache' # optinally a cache service
+        cache_lifetime: 3600 # default
+```
+
+You may then run the following code to get the page views for /example-page.
+
+``` php
+$fetcher = $this->get('happyr.google.analytics.data_fetcher');
+$pv = $fetcher->getPageViews('/example-page');
+```
+
+
 [devguide]: https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide
+[siteAuth]: https://github.com/Happyr/GoogleSiteAuthenticatorBundle

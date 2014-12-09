@@ -67,7 +67,7 @@ happyr_google_analytics:
 
 ## Fetching data
 
-If yuo want to fetch data from google analytics you must install and configure [GoogleSiteAuthenticatorBundle][siteAuth]. Read its documentaion and then configure the analytics bundle with a `client service` and a `view id`. The `view id` is found in the admin section on Google analytics. Go to Admin > Account > Proterty > View > View settings. 
+If you want to fetch data from google analytics you must install and configure [GoogleSiteAuthenticatorBundle][siteAuth]. Read its documentaion and then configure the analytics bundle with a `client service` and a `view id`. The `view id` is found in the admin section on Google analytics. Go to Admin > Account > Proterty > View > View settings. 
 
 ``` yaml
 # app/config/config.yml

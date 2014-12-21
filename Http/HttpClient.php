@@ -76,8 +76,12 @@ class HttpClient implements HttpClientInterface
         $client = $this->getClient();
         $options = array(
             'body' => $data,
+            'headers'=> array(
+                'User-Agent' => 'happyr-google-analytics/3.0',
+            ),
             'timeout' => $this->requestTimeout,
         );
+
         $request = $client->createRequest('POST', $this->endpoint, $options);
 
         // If we should send the async or not.
@@ -89,6 +93,7 @@ class HttpClient implements HttpClientInterface
 
         try {
             $response = $client->send($request);
+
         } catch (RequestException $e) {
             return false;
         }

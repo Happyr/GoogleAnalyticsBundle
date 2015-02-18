@@ -18,7 +18,7 @@ class ClientIdProvider
     /**
      * @var \Symfony\Component\HttpFoundation\Request request
      */
-    private $request;
+    protected $request;
 
     /**
      * @param Request $request

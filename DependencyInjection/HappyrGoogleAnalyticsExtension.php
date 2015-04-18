@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle\DependencyInjection;
+namespace Happyr\GoogleAnalyticsBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -23,7 +23,7 @@ class HappyrGoogleAnalyticsExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $base = 'happyr.google.analytics.param.';
+        $base = 'happyr.google_analytics.param.';
         $container->setParameter($base . 'endpoint', $config['endpoint']);
         $container->setParameter($base . 'fireAndForget', $config['fireAndForget']);
         $container->setParameter($base . 'requestTimeout', $config['requestTimeout']);
@@ -33,21 +33,21 @@ class HappyrGoogleAnalyticsExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
 
-        $trackerDef = $container->getDefinition('happyr.google.analytics.tracker');
+        $trackerDef = $container->getDefinition('happyr.google_analytics.tracker');
         $trackerDef->replaceArgument(2, $config['tracking_id'])
             ->replaceArgument(3, $config['version']);
 
         if (!$config['enabled']) {
-            $trackerDef->replaceArgument(0, new Reference('happyr.google.analytics.http.dummy'));
+            $trackerDef->replaceArgument(0, new Reference('happyr.google_analytics.http.dummy'));
         }
 
         if ($config['fetching']['cache_service']) {
-            $container->getDefinition('happyr.google.analytics.data_fetcher')
+            $container->getDefinition('happyr.google_analytics.data_fetcher')
                 ->replaceArgument(0, new Reference($config['fetching']['cache_service']));
         }
 
         if ($config['fetching']['client_service']) {
-            $container->getDefinition('happyr.google.analytics.data_fetcher')
+            $container->getDefinition('happyr.google_analytics.data_fetcher')
                 ->replaceArgument(1, new Reference($config['fetching']['client_service']));
         }
     }

@@ -1,5 +1,5 @@
 <?php
-namespace Happyr\Google\AnalyticsBundle\Http;
+namespace Happyr\GoogleAnalyticsBundle\Http;
 
 /**
  * Class Tracker

@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle\Service;
+namespace Happyr\GoogleAnalyticsBundle\Service;
 
 use Doctrine\Common\Cache\CacheProvider;
 

@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Happyr\Google\AnalyticsBundle\Tests\Service;
+namespace Happyr\GoogleAnalyticsBundle\Tests\Service;
 
-use Happyr\Google\AnalyticsBundle\Service\Tracker;
+use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 
 /**
  * Class TrackerTest
@@ -28,7 +28,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             'baz'=>'bar',
         );
 
-        $httpClient=$this->getMockBuilder('Happyr\Google\AnalyticsBundle\Http\HttpClientInterface')
+        $httpClient=$this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface')
             ->setMethods(array('send'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -38,9 +38,11 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             ->with($data)
             ->willReturn(true);
 
-        $clientIdProvider=$this->getMock('Happyr\Google\AnalyticsBundle\Service\ClientIdProvider');
+        $clientIdProvider=$this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $tracker = $this->getMockBuilder('Happyr\Google\AnalyticsBundle\Service\Tracker')
+        $tracker = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\Tracker')
             ->setMethods(array('getClientId'))
             ->enableOriginalConstructor()
             ->setConstructorArgs(array($httpClient, $clientIdProvider, $trackerId, $version))
@@ -56,7 +58,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
     public function testGetClientId()
     {
         $clientId='foobar';
-        $provider = $this->getMockBuilder('Happyr\Google\AnalyticsBundle\Service\ClientIdProvider')
+        $provider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
             ->setMethods(array('getClientId'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -65,7 +67,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($clientId);
 
         $tracker = new TrackerDummy(
-            $this->getMock('Happyr\Google\AnalyticsBundle\Http\HttpClientInterface'),
+            $this->getMock('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface'),
             $provider,
             'foo',
             'bar'

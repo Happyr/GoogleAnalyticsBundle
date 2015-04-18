@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle\Tests\Http;
+namespace Happyr\GoogleAnalyticsBundle\Tests\Http;
 
 /**
  * Class HttpClientTest
@@ -53,7 +53,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->willReturn($response);
 
 
-        $httpClient=$this->getMockBuilder('Happyr\Google\AnalyticsBundle\Http\HttpClient')
+        $httpClient=$this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClient')
             ->setMethods(array('getClient'))
             ->setConstructorArgs(array($endpoint, false, 1))
             ->getMock();

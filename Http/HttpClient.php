@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle\Http;
+namespace Happyr\GoogleAnalyticsBundle\Http;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;

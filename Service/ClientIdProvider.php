@@ -1,9 +1,8 @@
 <?php
 
+namespace Happyr\GoogleAnalyticsBundle\Service;
 
-namespace Happyr\Google\AnalyticsBundle\Service;
-
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class ClientIdProvider
@@ -16,16 +15,16 @@ class ClientIdProvider
     const COOKIE_NAME = '_ga';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Request request
+     * @var RequestStack requestStack
      */
-    protected $request;
+    protected $requestStack;
 
     /**
-     * @param Request $request
+     * @param RequestStack $requestStack
      */
-    public function setRequest(Request $request = null)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -56,11 +55,11 @@ class ClientIdProvider
      */
     protected function getClientIdFormCookie()
     {
-        if ($this->request === null) {
+        if (null === $request = $this->requestStack->getMasterRequest()) {
             return false;
         }
 
-        $cookies = $this->request->cookies;
+        $cookies = $request->cookies;
         if (!$cookies->has(self::COOKIE_NAME)) {
             return false;
         }

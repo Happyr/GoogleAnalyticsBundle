@@ -12,19 +12,17 @@
         }
     ],
     "require": {
-        "php": ">=5.4",
-        "symfony/yaml": "2.*",
+        "php": "^5.4|^7.0",
         "guzzlehttp/guzzle": "~5.0",
-        "symfony/framework-bundle": "~2.3"
+        "symfony/framework-bundle": "^2.7|^3.0"
     },
     "suggest": {
         "happyr/google-site-authenticator-bundle": "To be able to fetch data from google analytics."
     },
     "autoload": {
-        "psr-0": {
-            "Happyr\\Google\\AnalyticsBundle\\": ""
+        "psr-4": {
+            "Happyr\\GoogleAnalyticsBundle\\": ""
         }
-    },
-    "target-dir": "Happyr/Google/AnalyticsBundle"
+    }
 }
 

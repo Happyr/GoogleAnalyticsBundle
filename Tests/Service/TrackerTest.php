@@ -1,34 +1,31 @@
 <?php
 
-
 namespace Happyr\GoogleAnalyticsBundle\Tests\Service;
 
 use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 
 /**
- * Class TrackerTest
+ * Class TrackerTest.
  *
  * @author Tobias Nyholm
- *
- *
  */
 class TrackerTest extends \PHPUnit_Framework_TestCase
 {
     public function testSend()
     {
-        $trackerId='foo';
-        $version=1;
-        $clientId='clientId';
+        $trackerId = 'foo';
+        $version = 1;
+        $clientId = 'clientId';
 
-        $data=array(
-            'v'=>$version,
-            'tid'=>$trackerId,
-            'cid'=>$clientId,
-            't'=>'pageview',
-            'baz'=>'bar',
+        $data = array(
+            'v' => $version,
+            'tid' => $trackerId,
+            'cid' => $clientId,
+            't' => 'pageview',
+            'baz' => 'bar',
         );
 
-        $httpClient=$this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface')
+        $httpClient = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface')
             ->setMethods(array('send'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -38,7 +35,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             ->with($data)
             ->willReturn(true);
 
-        $clientIdProvider=$this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
+        $clientIdProvider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -52,12 +49,12 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             ->method('getClientId')
             ->willReturn($clientId);
 
-        $tracker->send(array('baz'=>'bar'), 'pageview');
+        $tracker->send(array('baz' => 'bar'), 'pageview');
     }
 
     public function testGetClientId()
     {
-        $clientId='foobar';
+        $clientId = 'foobar';
         $provider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
             ->setMethods(array('getClientId'))
             ->disableOriginalConstructor()
@@ -73,8 +70,8 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             'bar'
         );
 
-        $firstResult=$tracker->getClientId();
-        $secondResult=$tracker->getClientId();
+        $firstResult = $tracker->getClientId();
+        $secondResult = $tracker->getClientId();
 
         $this->assertEquals($firstResult, $secondResult, 'getClientId must return the same ID at every call');
     }

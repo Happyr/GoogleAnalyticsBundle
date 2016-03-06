@@ -1,16 +1,14 @@
 <?php
+
 namespace Happyr\GoogleAnalyticsBundle\Http;
 
 /**
- * Class Tracker
- *
- * @author Tobias Nyholm
- *
+ * Interface HttpClientInterface.
  */
 interface HttpClientInterface
 {
     /**
-     * Send a post request to the endpoint
+     * Send a post request to the endpoint.
      *
      * @param array $data
      *

@@ -6,10 +6,9 @@ use Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class ClientIdProviderTest
+ * Class ClientIdProviderTest.
  *
  * @author Tobias Nyholm
- *
  */
 class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -23,7 +22,7 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
             ->method('getClientIdFormCookie')
             ->willReturn(false);
 
-        $result=$provider->getClientId();
+        $result = $provider->getClientId();
 
         $this->assertRegExp('|[0-9]{9}+|', $result, 'Not big and random enough');
     }

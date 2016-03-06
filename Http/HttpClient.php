@@ -6,10 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
 /**
- * Class Tracker
- *
- * @author Tobias Nyholm
- *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class HttpClient implements HttpClientInterface
 {
@@ -21,13 +18,12 @@ class HttpClient implements HttpClientInterface
     protected $endpoint;
 
     /**
-     * @var integer requestTimeout
-     *
+     * @var int requestTimeout
      */
     protected $requestTimeout;
 
     /**
-     * @var boolean fireAndForget
+     * @var bool fireAndForget
      *
      * Should we bother about the response or not?
      */
@@ -35,14 +31,13 @@ class HttpClient implements HttpClientInterface
 
     /**
      * @var Client client
-     *
      */
     protected $client;
 
     /**
      * @param string $endpoint
-     * @param boolean $fireAndForget
-     * @param integer $requestTimeout
+     * @param bool   $fireAndForget
+     * @param int    $requestTimeout
      */
     public function __construct($endpoint, $fireAndForget, $requestTimeout)
     {
@@ -52,7 +47,8 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * Get a GuzzleClient
+     * Get a GuzzleClient.
+     *
      * @return Client
      */
     protected function getClient()
@@ -65,7 +61,7 @@ class HttpClient implements HttpClientInterface
     }
 
     /**
-     * Send a post request to the endpoint
+     * Send a post request to the endpoint.
      *
      * @param array $data
      *
@@ -76,7 +72,7 @@ class HttpClient implements HttpClientInterface
         $client = $this->getClient();
         $options = array(
             'body' => $data,
-            'headers'=> array(
+            'headers' => array(
                 'User-Agent' => 'happyr-google-analytics/3.0',
             ),
             'timeout' => $this->requestTimeout,
@@ -93,7 +89,6 @@ class HttpClient implements HttpClientInterface
 
         try {
             $response = $client->send($request);
-
         } catch (RequestException $e) {
             return false;
         }

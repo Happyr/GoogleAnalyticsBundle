@@ -5,6 +5,8 @@ namespace Happyr\GoogleAnalyticsBundle\Service;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
+ * This service tries to fetch a cookie and return Googles client id. The client id is like a user id.
+ *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class ClientIdProvider

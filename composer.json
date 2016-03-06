@@ -13,11 +13,13 @@
     ],
     "require": {
         "php": "^5.4|^7.0",
-        "guzzlehttp/guzzle": "~5.0",
+        "php-http/httplug": "^1.0",
+        "php-http/message-factory": "^1.0",
         "symfony/framework-bundle": "^2.7|^3.0"
     },
     "suggest": {
-        "happyr/google-site-authenticator-bundle": "To be able to fetch data from google analytics."
+        "happyr/google-site-authenticator-bundle": "To be able to fetch data from google analytics.",
+        "php-http/httplug-bundle": "To register HTTP clients as services"
     },
     "autoload": {
         "psr-4": {

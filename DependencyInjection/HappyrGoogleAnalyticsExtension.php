@@ -25,8 +25,6 @@ class HappyrGoogleAnalyticsExtension extends Extension
 
         $base = 'happyr.google_analytics.param.';
         $container->setParameter($base.'endpoint', $config['endpoint']);
-        $container->setParameter($base.'fireAndForget', $config['fireAndForget']);
-        $container->setParameter($base.'requestTimeout', $config['requestTimeout']);
         $container->setParameter($base.'view_id', $config['fetching']['view_id']);
         $container->setParameter($base.'cache_lifetime', $config['fetching']['cache_lifetime']);
 
@@ -38,7 +36,11 @@ class HappyrGoogleAnalyticsExtension extends Extension
             ->replaceArgument(3, $config['version']);
 
         if (!$config['enabled']) {
-            $trackerDef->replaceArgument(0, new Reference('happyr.google_analytics.http.dummy'));
+            $trackerDef->replaceArgument(0, new Reference('happyr.google_analytics.http.void'));
+        } else {
+            $container->getDefinition('happyr.google_analytics.http.client')
+                ->replaceArgument(0, new Reference($config['http_client']))
+                ->replaceArgument(1, new Reference($config['http_message_factory']));
         }
 
         if ($config['fetching']['cache_service']) {
@@ -49,6 +51,8 @@ class HappyrGoogleAnalyticsExtension extends Extension
         if ($config['fetching']['client_service']) {
             $container->getDefinition('happyr.google_analytics.data_fetcher')
                 ->replaceArgument(1, new Reference($config['fetching']['client_service']));
+        } else {
+            $container->removeDefinition('happyr.google_analytics.data_fetcher');
         }
     }
 }

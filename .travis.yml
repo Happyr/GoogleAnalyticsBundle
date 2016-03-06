@@ -9,9 +9,7 @@ php:
     - hhvm
 
 env:
-  - SYMFONY_VERSION=2.7.*
   - SYMFONY_VERSION=2.8.*
-  - SYMFONY_VERSION=3.0.*
 
 cache:
     directories:
@@ -28,6 +26,8 @@ script:
   - phpunit
 
 matrix:
-  allow_failures:
+  include:
     - env: SYMFONY_VERSION=3.0.*
-      php: 5.4
+      php: 5.5
+    - env: SYMFONY_VERSION=2.7.*
+      php: 5.5

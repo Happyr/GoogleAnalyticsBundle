@@ -5,7 +5,7 @@ namespace Happyr\GoogleAnalyticsBundle\Http;
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class Dummy implements HttpClientInterface
+class VoidHttpClient implements HttpClientInterface
 {
     /**
      * This is just a dummy client.. Do nothing.

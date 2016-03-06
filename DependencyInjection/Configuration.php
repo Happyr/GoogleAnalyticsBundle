@@ -20,12 +20,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('version')->cannotBeEmpty()->defaultValue(1)->end()
-            ->booleanNode('enabled')->defaultTrue()->end()
+            ->booleanNode('enabled')->defaultTrue()->info('If disabled we will not send any data')->end()
+            ->scalarNode('version')->cannotBeEmpty()->defaultValue(1)->info('The version of the Measurement Protocol')->end()
             ->scalarNode('tracking_id')->isRequired()->cannotBeEmpty()->end()
+
             ->scalarNode('endpoint')->defaultValue('http://www.google-analytics.com/collect')->cannotBeEmpty()->end()
-            ->booleanNode('fireAndForget')->defaultFalse()->end()
-            ->floatNode('requestTimeout')->defaultValue(1)->end()
+            ->scalarNode('http_client')->defaultValue('httplug.client')->end()
+            ->scalarNode('http_message_factory')->defaultValue('httplug.message_factory')->end()
+
             ->arrayNode('fetching')->addDefaultsIfNotSet()->children()
                 ->integerNode('view_id')->defaultNull()->info('The google analytics view id. This is not the same as the tracking code.')->end()
                 ->scalarNode('cache_service')->defaultNull()->end()

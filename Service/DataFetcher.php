@@ -37,12 +37,8 @@ class DataFetcher
      * @param int            $viewId
      * @param int            $cacheLifetime seconds
      */
-    public function __construct(CacheProvider $cache, \Google_Client $client = null, $viewId, $cacheLifetime)
+    public function __construct(CacheProvider $cache, \Google_Client $client, $viewId, $cacheLifetime)
     {
-        if (!$client) {
-            throw new \LogicException('You must install and configure happyr/google-site-authenticator-bundle in order to use the fetching data service.');
-        }
-
         $this->cache = $cache;
         $this->client = $client;
         $this->viewId = $viewId;

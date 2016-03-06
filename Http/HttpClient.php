@@ -2,10 +2,12 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Http;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
+use Http\Message\MessageFactory;
+use Http\Client\HttpClient as HttplugClient;
 
 /**
+ * This is an adapter for Httplug.
+ *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class HttpClient implements HttpClientInterface
@@ -18,46 +20,25 @@ class HttpClient implements HttpClientInterface
     protected $endpoint;
 
     /**
-     * @var int requestTimeout
-     */
-    protected $requestTimeout;
-
-    /**
-     * @var bool fireAndForget
-     *
-     * Should we bother about the response or not?
-     */
-    protected $fireAndForget;
-
-    /**
-     * @var Client client
+     * @var HttplugClient client
      */
     protected $client;
 
     /**
-     * @param string $endpoint
-     * @param bool   $fireAndForget
-     * @param int    $requestTimeout
+     * @var MessageFactory
      */
-    public function __construct($endpoint, $fireAndForget, $requestTimeout)
-    {
-        $this->endpoint = $endpoint;
-        $this->fireAndForget = $fireAndForget;
-        $this->requestTimeout = $requestTimeout;
-    }
+    protected $messageFactory;
 
     /**
-     * Get a GuzzleClient.
-     *
-     * @return Client
+     * @param HttplugClient  $client
+     * @param MessageFactory $messageFactory
+     * @param string         $endpoint
      */
-    protected function getClient()
+    public function __construct(HttplugClient $client, MessageFactory $messageFactory, $endpoint)
     {
-        if ($this->client === null) {
-            $this->client = new Client();
-        }
-
-        return $this->client;
+        $this->endpoint = $endpoint;
+        $this->client = $client;
+        $this->messageFactory = $messageFactory;
     }
 
     /**
@@ -69,30 +50,30 @@ class HttpClient implements HttpClientInterface
      */
     public function send(array $data = array())
     {
-        $client = $this->getClient();
-        $options = array(
-            'body' => $data,
-            'headers' => array(
-                'User-Agent' => 'happyr-google-analytics/3.0',
-            ),
-            'timeout' => $this->requestTimeout,
+        $request = $this->getMessageFactory()->createRequest(
+            'POST',
+            $this->endpoint,
+            ['User-Agent' => 'happyr-google-analytics/4.0'],
+            http_build_query($data)
         );
+        $response = $this->getClient()->sendRequest($request);
 
-        $request = $client->createRequest('POST', $this->endpoint, $options);
+        return $response->getStatusCode() === 200;
+    }
 
-        // If we should send the async or not.
-        if ($this->fireAndForget) {
-            $client->sendAll(array($request));
+    /**
+     * @return HttplugClient
+     */
+    protected function getClient()
+    {
+        return $this->client;
+    }
 
-            return true;
-        }
-
-        try {
-            $response = $client->send($request);
-        } catch (RequestException $e) {
-            return false;
-        }
-
-        return $response->getStatusCode() == '200';
+    /**
+     * @return MessageFactory
+     */
+    protected function getMessageFactory()
+    {
+        return $this->messageFactory;
     }
 }

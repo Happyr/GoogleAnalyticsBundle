@@ -3,27 +3,24 @@
 namespace Happyr\GoogleAnalyticsBundle\Tests\Http;
 
 /**
- * Class HttpClientTest
+ * Class HttpClientTest.
  *
  * @author Tobias Nyholm
- *
  */
 class HttpClientTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testSend()
     {
-        $endpoint='foobar';
-        $data=array(
-            'baz'=>'biz',
-            'bax'=>'foo',
+        $endpoint = 'foobar';
+        $data = array(
+            'baz' => 'biz',
+            'bax' => 'foo',
         );
 
-
-        $request=$this->getMockBuilder('GuzzleHttp\Message\Request')
+        $request = $this->getMockBuilder('GuzzleHttp\Message\Request')
             ->disableOriginalConstructor()
             ->getMock();
-        $response=$this->getMockBuilder('GuzzleHttp\Message\Response')
+        $response = $this->getMockBuilder('GuzzleHttp\Message\Response')
             ->setMethods(array('getStatusCode'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -31,7 +28,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->method('getStatusCode')
             ->willReturn('200');
 
-        $guzzleClient=$this->getMockBuilder('GuzzleHttp\Client')
+        $guzzleClient = $this->getMockBuilder('GuzzleHttp\Client')
             ->setMethods(array('createRequest', 'send'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -39,11 +36,12 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->method('createRequest')
             ->with($this->equalTo('POST'), $this->equalTo($endpoint), $this->callback(function ($param) use ($data) {
                 //make sure the data is in the body post
-                foreach($data as $k=>$v) {
-                    if(!isset($param['body'][$k]) || $param['body'][$k]!==$v) {
+                foreach ($data as $k => $v) {
+                    if (!isset($param['body'][$k]) || $param['body'][$k] !== $v) {
                         return false;
                     }
                 }
+
                 return true;
             }))
             ->willReturn($request);
@@ -52,8 +50,7 @@ class HttpClientTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($request))
             ->willReturn($response);
 
-
-        $httpClient=$this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClient')
+        $httpClient = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClient')
             ->setMethods(array('getClient'))
             ->setConstructorArgs(array($endpoint, false, 1))
             ->getMock();

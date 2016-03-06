@@ -5,7 +5,9 @@ namespace Happyr\GoogleAnalyticsBundle\Service;
 use Doctrine\Common\Cache\CacheProvider;
 
 /**
- * This service fetches data from the API
+ * This service fetches data from the API.
+ *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class DataFetcher
 {
@@ -30,12 +32,12 @@ class DataFetcher
     protected $cacheLifetime;
 
     /**
-     * @param CacheProvider $cache
+     * @param CacheProvider  $cache
      * @param \Google_Client $client
-     * @param int $viewId
-     * @param int $cacheLifetime seconds
+     * @param int            $viewId
+     * @param int            $cacheLifetime seconds
      */
-    public function __construct(CacheProvider $cache, \Google_Client $client=null, $viewId, $cacheLifetime)
+    public function __construct(CacheProvider $cache, \Google_Client $client = null, $viewId, $cacheLifetime)
     {
         if (!$client) {
             throw new \LogicException('You must install and configure happyr/google-site-authenticator-bundle in order to use the fetching data service.');
@@ -48,7 +50,7 @@ class DataFetcher
     }
 
     /**
-     * return the page views for the given url
+     * return the page views for the given url.
      *
      * @param string $uri
      * @param string $since date on format ('Y-m-d')
@@ -83,11 +85,11 @@ class DataFetcher
             try {
                 $analytics = new \Google_Service_Analytics($this->client);
                 $results = $analytics->data_ga->get(
-                    'ga:' . $this->viewId,
+                    'ga:'.$this->viewId,
                     $since,
                     date('Y-m-d'),
                     'ga:pageviews',
-                    array('filters' => 'ga:pagePath=~^' . $uri . $regex )
+                    array('filters' => 'ga:pagePath=~^'.$uri.$regex)
                 );
 
                 $rows = $results->getRows();

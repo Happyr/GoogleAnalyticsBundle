@@ -9,14 +9,14 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
 class HappyrGoogleAnalyticsExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -24,13 +24,13 @@ class HappyrGoogleAnalyticsExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $base = 'happyr.google_analytics.param.';
-        $container->setParameter($base . 'endpoint', $config['endpoint']);
-        $container->setParameter($base . 'fireAndForget', $config['fireAndForget']);
-        $container->setParameter($base . 'requestTimeout', $config['requestTimeout']);
-        $container->setParameter($base . 'view_id', $config['fetching']['view_id']);
-        $container->setParameter($base . 'cache_lifetime', $config['fetching']['cache_lifetime']);
+        $container->setParameter($base.'endpoint', $config['endpoint']);
+        $container->setParameter($base.'fireAndForget', $config['fireAndForget']);
+        $container->setParameter($base.'requestTimeout', $config['requestTimeout']);
+        $container->setParameter($base.'view_id', $config['fetching']['view_id']);
+        $container->setParameter($base.'cache_lifetime', $config['fetching']['cache_lifetime']);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         $trackerDef = $container->getDefinition('happyr.google_analytics.tracker');

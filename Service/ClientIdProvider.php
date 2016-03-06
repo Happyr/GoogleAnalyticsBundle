@@ -5,10 +5,7 @@ namespace Happyr\GoogleAnalyticsBundle\Service;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * Class ClientIdProvider
- *
- * @author Tobias Nyholm
- *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class ClientIdProvider
 {
@@ -28,7 +25,7 @@ class ClientIdProvider
     }
 
     /**
-     * Get client id from cookie... if we can
+     * Get client id from cookie... if we can.
      *
      *
      * @return false|string
@@ -40,14 +37,14 @@ class ClientIdProvider
             /*
              * We could not find any cookie with a client id. We just have to randomize one
              */
-            $clientId = mt_rand(10, 1000) . round(microtime(true));
+            $clientId = mt_rand(10, 1000).round(microtime(true));
         }
 
         return $clientId;
     }
 
     /**
-     * Return the value of a cookie
+     * Return the value of a cookie.
      *
      * @param string $name
      *

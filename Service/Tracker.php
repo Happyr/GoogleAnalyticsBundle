@@ -5,10 +5,7 @@ namespace Happyr\GoogleAnalyticsBundle\Service;
 use Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface;
 
 /**
- * Class Tracker
- *
- * @author Tobias Nyholm
- *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class Tracker
 {
@@ -35,21 +32,19 @@ class Tracker
 
     /**
      * @var HttpClientInterface client
-     *
      */
     protected $client;
 
     /**
      * @var ClientIdProvider clientIdProvider
-     *
      */
     protected $clientIdProvider;
 
     /**
      * @param HttpClientInterface $client
-     * @param ClientIdProvider $cip
-     * @param string $trackerId
-     * @param string $version
+     * @param ClientIdProvider    $cip
+     * @param string              $trackerId
+     * @param string              $version
      */
     public function __construct(HttpClientInterface $client, ClientIdProvider $cip, $trackerId, $version)
     {
@@ -60,9 +55,9 @@ class Tracker
     }
 
     /**
-     * Send data to the google analytics API
+     * Send data to the google analytics API.
      *
-     * @param array $data
+     * @param array  $data
      * @param string $hitType This can also be included in the $data['t']
      *
      * @return bool
@@ -79,10 +74,9 @@ class Tracker
     }
 
     /**
-     * Append the default parameters
+     * Append the default parameters.
      *
      * @param array $data
-     *
      */
     protected function appendDefaultParameters(array &$data)
     {
@@ -100,7 +94,6 @@ class Tracker
     }
 
     /**
-     *
      * @return string
      */
     protected function getClientId()

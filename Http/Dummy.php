@@ -3,15 +3,12 @@
 namespace Happyr\GoogleAnalyticsBundle\Http;
 
 /**
- * Class Dummy
- *
- * @author Tobias Nyholm
- *
+ * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
 class Dummy implements HttpClientInterface
 {
     /**
-     * This is just a dummy client.. Do nothing
+     * This is just a dummy client.. Do nothing.
      *
      * @param array $data
      *

@@ -30,4 +30,4 @@ script:
 matrix:
   allow_failures:
     - env: SYMFONY_VERSION=3.0.*
-    - php: 5.4
+      php: 5.4

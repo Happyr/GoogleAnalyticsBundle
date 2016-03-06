@@ -2,7 +2,7 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Service;
 
-use Doctrine\Common\Cache\CacheProvider;
+use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * This service fetches data from the API.
@@ -12,7 +12,7 @@ use Doctrine\Common\Cache\CacheProvider;
 class DataFetcher
 {
     /**
-     * @var \Doctrine\Common\Cache\CacheProvider cache
+     * @var CacheItemPoolInterface cache
      */
     protected $cache;
 
@@ -32,12 +32,12 @@ class DataFetcher
     protected $cacheLifetime;
 
     /**
-     * @param CacheProvider  $cache
-     * @param \Google_Client $client
-     * @param int            $viewId
-     * @param int            $cacheLifetime seconds
+     * @param CacheItemPoolInterface $cache
+     * @param \Google_Client         $client
+     * @param int                    $viewId
+     * @param int                    $cacheLifetime seconds
      */
-    public function __construct(CacheProvider $cache, \Google_Client $client, $viewId, $cacheLifetime)
+    public function __construct(CacheItemPoolInterface $cache, \Google_Client $client, $viewId, $cacheLifetime)
     {
         $this->cache = $cache;
         $this->client = $client;
@@ -46,29 +46,38 @@ class DataFetcher
     }
 
     /**
-     * return the page views for the given url.
+     * Get page views for the given url.
      *
-     * @param string $uri
-     * @param string $since date on format ('Y-m-d')
-     * @param string $regex
+     * @param string         $uri
+     * @param \DateTime|null $startTime
+     * @param \DateTime|null $endTime
+     * @param string         $regex
      *
      * @return int
      */
-    public function getPageViews($uri, $since = null, $regex = '$')
+    public function getPageViews($uri, \DateTime $startTime = null, \DateTime $endTime = null, $regex = '$')
     {
         if (empty($this->viewId)) {
             throw new \LogicException('You need to specify a profile id that we are going to fetch page views from');
         }
 
-        if (!$since) {
-            //one year ago
-            $since = date('Y-m-d', time() - 86400 * 365);
+        if ($startTime === null) {
+            // one year ago
+            $startTime = new \DateTime('-1year');
         }
 
+        if ($endTime === null) {
+            // today
+            $endTime = new \DateTime();
+        }
+
+        $start = $startTime->format('Y-m-d');
+        $end = $endTime->format('Y-m-d');
+
         //create the cache key
-        $cacheKey = md5($uri.$regex.$since);
-        $this->cache->setNamespace('PageStatistics.PageViews');
-        if (false === $visits = $this->cache->fetch($cacheKey)) {
+        $cacheKey = sha1($uri.$regex.$start);
+        $item = $this->cache->getItem($cacheKey);
+        if (!$item->isHit()) {
             //check if we got a token
             if (null === $this->client->getAccessToken()) {
                 return 0;
@@ -82,8 +91,8 @@ class DataFetcher
                 $analytics = new \Google_Service_Analytics($this->client);
                 $results = $analytics->data_ga->get(
                     'ga:'.$this->viewId,
-                    $since,
-                    date('Y-m-d'),
+                    $start,
+                    $end,
                     'ga:pageviews',
                     array('filters' => 'ga:pagePath=~^'.$uri.$regex)
                 );
@@ -94,10 +103,12 @@ class DataFetcher
                 $visits = 0;
             }
 
-            //save cache (TTL 1h)
-            $this->cache->save($cacheKey, $visits, $this->cacheLifetime);
+            //save cache item
+            $item->set($visits)
+                ->expiresAfter($this->cacheLifetime);
+            $this->cache->save($item);
         }
 
-        return $visits;
+        return $item->get();
     }
 }

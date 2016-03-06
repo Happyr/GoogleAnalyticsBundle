@@ -1,8 +1,8 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle\Service;
+namespace Happyr\GoogleAnalyticsBundle\Service;
 
-use Happyr\Google\AnalyticsBundle\Http\HttpClientInterface;
+use Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface;
 
 /**
  * Class Tracker

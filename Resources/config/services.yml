@@ -1,37 +1,29 @@
-parameters:
-  happyr.google.analytics.tracker.class: 'Happyr\Google\AnalyticsBundle\Service\Tracker'
-  happyr.google.analytics.http.client.class: 'Happyr\Google\AnalyticsBundle\Http\HttpClient'
-  happyr.google.analytics.http.dummy.class: 'Happyr\Google\AnalyticsBundle\Http\Dummy'
-  happyr.google.analytics.cache.dummy.class: 'Happyr\Google\AnalyticsBundle\Cache\Dummy'
-  happyr.google.analytics.clientIdProvider.class: 'Happyr\Google\AnalyticsBundle\Service\ClientIdProvider'
-  happyr.google.analytics.data_fetcher.class: 'Happyr\Google\AnalyticsBundle\Service\DataFetcher'
 
 services:
-  happyr.google.analytics.tracker:
-    class: %happyr.google.analytics.tracker.class%
-    arguments: [@happyr.google.analytics.http.client, @happyr.google.analytics.clientIdProvider, ~, ~]
+  happyr.google_analytics.tracker:
+    class: Happyr\GoogleAnalyticsBundle\Service\Tracker
+    arguments: ["@happyr.google_analytics.http.client", "@happyr.google_analytics.clientIdProvider", ~, ~]
 
-  happyr.google.analytics.http.client:
-    class: %happyr.google.analytics.http.client.class%
+  happyr.google_analytics.http.client:
+    class: Happyr\GoogleAnalyticsBundle\Http\HttpClient
     arguments:
-      - %happyr.google.analytics.param.endpoint%
-      - %happyr.google.analytics.param.fireAndForget%
-      - %happyr.google.analytics.param.requestTimeout%
+      - %happyr.google_analytics.param.endpoint%
+      - %happyr.google_analytics.param.fireAndForget%
+      - %happyr.google_analytics.param.requestTimeout%
 
-  happyr.google.analytics.http.dummy:
-    class: %happyr.google.analytics.http.dummy.class%
+  happyr.google_analytics.http.dummy:
+    class: Happyr\GoogleAnalyticsBundle\Http\Dummy
     arguments: []
 
-  happyr.google.analytics.cache.dummy:
-      class: %happyr.google.analytics.cache.dummy.class%
+  happyr.google_analytics.cache.dummy:
+      class: Happyr\GoogleAnalyticsBundle\Cache\Dummy
       arguments: []
 
-  happyr.google.analytics.clientIdProvider:
-    class: %happyr.google.analytics.clientIdProvider.class%
-    calls:
-      - [setRequest, ['@?request=']]
+  happyr.google_analytics.clientIdProvider:
+    class: Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider
+    arguments: ["@request_stack"]
 
-  happyr.google.analytics.data_fetcher:
-    class: %happyr.google.analytics.data_fetcher.class%
-    arguments: [@happyr.google.analytics.cache.dummy, ~, %happyr.google.analytics.param.view_id%, %happyr.google.analytics.param.cache_lifetime%]
+  happyr.google_analytics.data_fetcher:
+    class: Happyr\GoogleAnalyticsBundle\Service\DataFetcher
+    arguments: ["@happyr.google_analytics.cache.dummy", ~, %happyr.google_analytics.param.view_id%, %happyr.google_analytics.param.cache_lifetime%]
 

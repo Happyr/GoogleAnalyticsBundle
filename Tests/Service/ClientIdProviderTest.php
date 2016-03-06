@@ -1,8 +1,9 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle\Tests\Service;
+namespace Happyr\GoogleAnalyticsBundle\Tests\Service;
 
-use Happyr\Google\AnalyticsBundle\Service\ClientIdProvider;
+use Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Class ClientIdProviderTest
@@ -14,7 +15,7 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetClientId()
     {
-        $provider = $this->getMockBuilder('Happyr\Google\AnalyticsBundle\Service\ClientIdProvider')
+        $provider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
             ->setMethods(array('getClientIdFormCookie'))
             ->disableOriginalConstructor()
             ->getMock();
@@ -37,6 +38,11 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
 }
 class ProviderDummy extends ClientIdProvider
 {
+    public function __construct()
+    {
+        $this->requestStack = new RequestStack();
+    }
+
     public function extractCookie($cookieValue)
     {
         return parent::extractCookie($cookieValue);

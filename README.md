@@ -21,7 +21,7 @@ Read the documentation of the [protocol][devguide].
 ``` php
 
 //in some container aware class
-$tracker = $this->get('happyr.google.analytics.tracker');
+$tracker = $this->get('happyr.google_analytics.tracker');
 $data=array(
     'dh'=>'mydemo.com',
     'dp'=>'/home',
@@ -50,7 +50,7 @@ Register the bundle in the AppKernel.php
 // in AppKernel::registerBundles()
 $bundles = array(
     // ...
-    new Happyr\Google\AnalyticsBundle\HappyrGoogleAnalyticsBundle(),
+    new Happyr\GoogleAnalyticsBundle\HappyrGoogleAnalyticsBundle(),
     // ...
 );
 ```
@@ -85,7 +85,7 @@ happyr_google_analytics:
 You may then run the following code to get the page views for /example-page.
 
 ``` php
-$fetcher = $this->get('happyr.google.analytics.data_fetcher');
+$fetcher = $this->get('happyr.google_analytics.data_fetcher');
 $pv = $fetcher->getPageViews('/example-page');
 ```
 

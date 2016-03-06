@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\Google\AnalyticsBundle;
+namespace Happyr\GoogleAnalyticsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

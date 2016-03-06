@@ -2,6 +2,7 @@
 
 namespace Happyr\GoogleAnalyticsBundle\DependencyInjection;
 
+use Cache\Adapter\Void\VoidCachePool;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -43,12 +44,17 @@ class HappyrGoogleAnalyticsExtension extends Extension
                 ->replaceArgument(1, new Reference($config['http_message_factory']));
         }
 
-        if ($config['fetching']['cache_service']) {
-            $container->getDefinition('happyr.google_analytics.data_fetcher')
-                ->replaceArgument(0, new Reference($config['fetching']['cache_service']));
+        if (!empty($config['fetching']['cache_service'])) {
+            $cacheService = $config['fetching']['cache_service'];
+        } else {
+            $cacheService = 'happyr.google_analytics.cache.void';
+            $container->register($cacheService, VoidCachePool::class);
         }
 
-        if ($config['fetching']['client_service']) {
+        $container->getDefinition('happyr.google_analytics.data_fetcher')
+            ->replaceArgument(0, new Reference($cacheService));
+
+        if (!empty($config['fetching']['client_service'])) {
             $container->getDefinition('happyr.google_analytics.data_fetcher')
                 ->replaceArgument(1, new Reference($config['fetching']['client_service']));
         } else {

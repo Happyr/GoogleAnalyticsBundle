@@ -29,10 +29,10 @@ class AppKernel extends Kernel
 
     public function registerBundles()
     {
-        return array(
+        return [
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Happyr\GoogleAnalyticsBundle\HappyrGoogleAnalyticsBundle(),
-        );
+        ];
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)

@@ -14,7 +14,7 @@ class VoidHttpClient implements HttpClientInterface
      *
      * @return bool
      */
-    public function send(array $data = array())
+    public function send(array $data = [])
     {
         return true;
     }

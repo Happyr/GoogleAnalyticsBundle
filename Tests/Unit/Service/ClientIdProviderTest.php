@@ -15,7 +15,7 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetClientId()
     {
         $provider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
-            ->setMethods(array('getClientIdFormCookie'))
+            ->setMethods(['getClientIdFormCookie'])
             ->disableOriginalConstructor()
             ->getMock();
         $provider->expects($this->once())

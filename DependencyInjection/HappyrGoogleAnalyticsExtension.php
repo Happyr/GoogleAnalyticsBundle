@@ -3,6 +3,8 @@
 namespace Happyr\GoogleAnalyticsBundle\DependencyInjection;
 
 use Cache\Adapter\Void\VoidCachePool;
+use Happyr\GoogleAnalyticsBundle\Http\HttpClient;
+use Happyr\GoogleAnalyticsBundle\Service\DataFetcher;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -24,11 +26,6 @@ class HappyrGoogleAnalyticsExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $base = 'happyr.google_analytics.param.';
-        $container->setParameter($base.'endpoint', $config['endpoint']);
-        $container->setParameter($base.'view_id', $config['fetching']['view_id']);
-        $container->setParameter($base.'cache_lifetime', $config['fetching']['cache_lifetime']);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
@@ -39,26 +36,36 @@ class HappyrGoogleAnalyticsExtension extends Extension
         if (!$config['enabled']) {
             $trackerDef->replaceArgument(0, new Reference('happyr.google_analytics.http.void'));
         } else {
-            $container->getDefinition('happyr.google_analytics.http.client')
-                ->replaceArgument(0, new Reference($config['http_client']))
-                ->replaceArgument(1, new Reference($config['http_message_factory']));
+            $container->register('happyr.google_analytics.http.client', HttpClient::class)
+                ->setPublic(false)
+                ->addArgument(0, new Reference($config['http_client']))
+                ->addArgument(1, new Reference($config['http_message_factory']))
+                ->addArgument($config['endpoint']);
         }
 
+        if (!empty($config['fetching']['client_service'])) {
+            $this->configureDataFetcher($container, $config);
+        }
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param $config
+     */
+    private function configureDataFetcher(ContainerBuilder $container, $config)
+    {
         if (!empty($config['fetching']['cache_service'])) {
             $cacheService = $config['fetching']['cache_service'];
         } else {
             $cacheService = 'happyr.google_analytics.cache.void';
-            $container->register($cacheService, VoidCachePool::class);
+            $container->register($cacheService, VoidCachePool::class)
+                ->setPublic(false);
         }
 
-        $container->getDefinition('happyr.google_analytics.data_fetcher')
-            ->replaceArgument(0, new Reference($cacheService));
-
-        if (!empty($config['fetching']['client_service'])) {
-            $container->getDefinition('happyr.google_analytics.data_fetcher')
-                ->replaceArgument(1, new Reference($config['fetching']['client_service']));
-        } else {
-            $container->removeDefinition('happyr.google_analytics.data_fetcher');
-        }
+        $container->register('happyr.google_analytics.data_fetcher', DataFetcher::class)
+            ->addArgument(new Reference($cacheService))
+            ->addArgument(new Reference($config['fetching']['client_service']))
+            ->addArgument($config['fetching']['view_id'])
+            ->addArgument($config['fetching']['cache_lifetime']);
     }
 }

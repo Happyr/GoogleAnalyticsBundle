@@ -1,0 +1,5 @@
+imports:
+    - { resource: framework.yml }
+
+happyr_google_analytics:
+  tracking_id: 'foobar'

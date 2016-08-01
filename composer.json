@@ -8,7 +8,7 @@
     "authors": [
         {
             "name": "Tobias Nyholm",
-            "email": "tobias@happyr.com"
+            "email": "tobias.nyholm@gmail.com"
         }
     ],
     "require": {
@@ -19,6 +19,11 @@
         "php-http/message-factory": "^1.0",
         "symfony/framework-bundle": "^2.7 || ^3.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^4.5 || ^5.4",
+        "symfony/symfony": "^2.7 || ^3.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^1.0"
+    },
     "suggest": {
         "happyr/google-site-authenticator-bundle": "To be able to fetch data from google analytics.",
         "php-http/httplug-bundle": "To register HTTP clients as services"
@@ -27,6 +32,9 @@
         "psr-4": {
             "Happyr\\GoogleAnalyticsBundle\\": ""
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
 

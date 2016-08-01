@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\GoogleAnalyticsBundle\Tests\Service;
+namespace Happyr\GoogleAnalyticsBundle\Tests\Unit\Service;
 
 use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 
@@ -64,7 +64,7 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             ->willReturn($clientId);
 
         $tracker = new TrackerDummy(
-            $this->getMock('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface'),
+            $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface')->getMock(),
             $provider,
             'foo',
             'bar'

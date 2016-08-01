@@ -93,7 +93,7 @@ happyr_google_analytics:
     fetching:
         client_service: 'google.client.tobias_gmail'
         view_id: 0123456789
-        cache_service: 'doctrine_cache.providers.apc_cache' # optinally a cache service
+        cache_service: 'cache.provider.my_memcached' # optinally a PSR6 cache service
         cache_lifetime: 3600 # default
 ```
 

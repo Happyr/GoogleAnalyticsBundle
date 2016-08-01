@@ -26,7 +26,7 @@ class Tracker
     /**
      * @var string clientId
      *
-     * The unique client Id. This is a visitor id.
+     * The unique client Id. This is a visitor id
      */
     protected $clientId;
 

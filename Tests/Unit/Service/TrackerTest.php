@@ -18,10 +18,10 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
         $clientId = 'clientId';
 
         $data = [
-            'v'   => $version,
+            'v' => $version,
             'tid' => $trackerId,
             'cid' => $clientId,
-            't'   => 'pageview',
+            't' => 'pageview',
             'baz' => 'bar',
         ];
 

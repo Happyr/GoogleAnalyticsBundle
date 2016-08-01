@@ -20,7 +20,7 @@ install:
   - travis_retry composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
 
 script:
-  - phpunit
+  - composer test
 
 matrix:
   include:

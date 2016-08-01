@@ -32,6 +32,9 @@
         "psr-4": {
             "Happyr\\GoogleAnalyticsBundle\\": ""
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }
 

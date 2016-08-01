@@ -7,16 +7,6 @@ services:
   happyr.google_analytics.http.void:
     class: Happyr\GoogleAnalyticsBundle\Http\VoidHttpClient
 
-  happyr.google_analytics.http.client:
-    class: Happyr\GoogleAnalyticsBundle\Http\HttpClient
-    public: false
-    arguments: [~, ~, "%happyr.google_analytics.param.endpoint%"]
-
   happyr.google_analytics.clientIdProvider:
     class: Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider
     arguments: ["@request_stack"]
-
-  happyr.google_analytics.data_fetcher:
-    class: Happyr\GoogleAnalyticsBundle\Service\DataFetcher
-    arguments: ["@happyr.google_analytics.cache.dummy", ~, "%happyr.google_analytics.param.view_id%", "%happyr.google_analytics.param.cache_lifetime%"]
-

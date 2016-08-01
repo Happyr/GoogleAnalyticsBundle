@@ -1,6 +1,13 @@
 Google Analytics Bundle
 =======================
 
+[![Latest Version](https://img.shields.io/github/release/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://github.com/Happyr/GoogleAnalyticsBundle/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Build Status](https://img.shields.io/travis/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://travis-ci.org/Happyr/GoogleAnalyticsBundle)
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/Happyr/GoogleAnalyticsBundle)
+[![Quality Score](https://img.shields.io/scrutinizer/g/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/Happyr/GoogleAnalyticsBundle)
+[![Total Downloads](https://img.shields.io/packagist/dt/happyr/google-analytics-bundle.svg?style=flat-square)](https://packagist.org/packages/happyr/google-analytics-bundle)
+
 GoogleAnalyticsBundle is a Symfony2 bundle that helps you to push data to Google Analytics.
 It could be data like pageview, events etc. It is a bundle implementation of
 the [Measurement Protocol][devguide]
@@ -37,7 +44,7 @@ Install with composer.
 
 
 ``` bash
-composer require happyr/google-analytics-bundle:3.0.*
+composer require happyr/google-analytics-bundle
 ```
 
 ### Step 2: Register the bundle

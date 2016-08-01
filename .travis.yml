@@ -15,14 +15,17 @@ cache:
     directories:
         - $HOME/.composer/cache/files
 
-install:
-  - composer require symfony/symfony:${SYMFONY_VERSION} --no-update
-  - travis_retry composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
 
-script:
-  - composer test
+branches:
+    except:
+        - /^analysis-.*$/
+
+env:
+  global:
+    - TEST_COMMAND="composer test"
 
 matrix:
+  fast_finish: true
   include:
     - env: SYMFONY_VERSION=3.1.*
       php: 7.1
@@ -30,3 +33,16 @@ matrix:
       php: 7.1
     - env: SYMFONY_VERSION=2.7.*
       php: 7.1
+    - env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest" COVERAGE=true TEST_COMMAND="composer test-ci" SYMFONY_VERSION=2.7.*
+      php: 5.5
+
+install:
+  - composer require symfony/symfony:${SYMFONY_VERSION} --no-update
+  - travis_retry composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
+
+script:
+    - $TEST_COMMAND
+
+after_success:
+    - if [[ $COVERAGE = true ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+    - if [[ $COVERAGE = true ]]; then php ocular.phar code-coverage:upload --format=php-clover build/coverage.xml; fi

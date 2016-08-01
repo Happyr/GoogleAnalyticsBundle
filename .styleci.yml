@@ -1,0 +1,9 @@
+preset: symfony
+
+finder:
+    exclude:
+        - "Resources"
+        - "vendor"
+
+enabled:
+    - short_array_syntax

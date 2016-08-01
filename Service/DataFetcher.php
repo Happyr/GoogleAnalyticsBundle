@@ -94,7 +94,7 @@ class DataFetcher
                     $start,
                     $end,
                     'ga:pageviews',
-                    array('filters' => 'ga:pagePath=~^'.$uri.$regex)
+                    ['filters' => 'ga:pagePath=~^'.$uri.$regex]
                 );
 
                 $rows = $results->getRows();

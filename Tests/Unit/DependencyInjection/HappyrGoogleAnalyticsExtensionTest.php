@@ -10,10 +10,9 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class HappyrGoogleAnalyticsExtensionTest extends AbstractExtensionTestCase
 {
-
     protected function getMinimalConfiguration()
     {
-        return ['tracking_id'=>'id'];
+        return ['tracking_id' => 'id'];
     }
 
     protected function getContainerExtensions()
@@ -32,18 +31,16 @@ class HappyrGoogleAnalyticsExtensionTest extends AbstractExtensionTestCase
 
     public function testTrackerDisabled()
     {
-        $this->load(['enabled'=>false]);
+        $this->load(['enabled' => false]);
         $this->assertContainerBuilderHasService('happyr.google_analytics.tracker', Tracker::class);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('happyr.google_analytics.tracker', 0, new Reference('happyr.google_analytics.http.void'));
     }
 
-
     public function testFetcher()
     {
-        $this->load(['fetching'=>['client_service'=>'foo']]);
+        $this->load(['fetching' => ['client_service' => 'foo']]);
         $this->assertContainerBuilderHasService('happyr.google_analytics.data_fetcher', DataFetcher::class);
         $this->assertContainerBuilderHasServiceDefinitionWithArgument('happyr.google_analytics.data_fetcher', 1, new Reference('foo'));
-
     }
 
     public function testFetcherDisabled()
@@ -51,6 +48,4 @@ class HappyrGoogleAnalyticsExtensionTest extends AbstractExtensionTestCase
         $this->load();
         $this->assertContainerBuilderNotHasService('happyr.google_analytics.data_fetcher');
     }
-
-
 }

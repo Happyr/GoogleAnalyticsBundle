@@ -2,8 +2,8 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Http;
 
-use Http\Message\MessageFactory;
 use Http\Client\HttpClient as HttplugClient;
+use Http\Message\MessageFactory;
 
 /**
  * This is an adapter for Httplug.
@@ -48,7 +48,7 @@ class HttpClient implements HttpClientInterface
      *
      * @return bool
      */
-    public function send(array $data = array())
+    public function send(array $data = [])
     {
         $request = $this->getMessageFactory()->createRequest(
             'POST',

@@ -65,9 +65,24 @@ happyr_google_analytics:
     tracking_id: UA-XXXX-Y
 ```
 
+### Step 4: Provide a HTTP client and message factory service. 
+
+You need to provide two services to that know how to create and send message factories. The services must implement
+`Http\Message\RequestFactory` and `Http\Client\HttpClient`. If you use [HTTPlugBundle](https://github.com/php-http/HttplugBundle)
+ this will be taken care of automatically. You will aslo get some nice logging features. 
+
+``` yaml
+# app/config/config.yml
+
+happyr_google_analytics:
+    // ...
+    http_client: 'httplug.client'
+    http_message_factory: 'httplug.message_factory
+```
+
 ## Fetching data
 
-If you want to fetch data from google analytics you must install and configure [GoogleSiteAuthenticatorBundle][siteAuth]. Read its documentaion and then configure the analytics bundle with a `client service` and a `view id`. The `view id` is found in the admin section on Google analytics. Go to Admin > Account > Property > View > View settings. 
+If you want to fetch data from Google Analytics you must install and configure [GoogleSiteAuthenticatorBundle][siteAuth]. Read its documentaion and then configure the analytics bundle with a `client service` and a `view id`. The `view id` is found in the admin section on Google analytics. Go to Admin > Account > Property > View > View settings. 
 
 ``` yaml
 # app/config/config.yml

@@ -1,6 +1,6 @@
 <?php
 
-namespace Happyr\GoogleAnalyticsBundle\Tests\Service;
+namespace Happyr\GoogleAnalyticsBundle\Tests\Unit\Service;
 
 use Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider;
 use Symfony\Component\HttpFoundation\RequestStack;

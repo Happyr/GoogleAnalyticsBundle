@@ -38,8 +38,8 @@ class HappyrGoogleAnalyticsExtension extends Extension
         } else {
             $container->register('happyr.google_analytics.http.client', HttpClient::class)
                 ->setPublic(false)
-                ->addArgument(0, new Reference($config['http_client']))
-                ->addArgument(1, new Reference($config['http_message_factory']))
+                ->addArgument(new Reference($config['http_client']))
+                ->addArgument(new Reference($config['http_message_factory']))
                 ->addArgument($config['endpoint']);
         }
 

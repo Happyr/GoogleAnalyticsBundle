@@ -3,3 +3,11 @@ imports:
 
 happyr_google_analytics:
   tracking_id: 'foobar'
+
+
+services:
+  httplug.message_factory:
+    class: Tests\Functional\Fixture\MessageFactory
+
+  httplug.client:
+    class: Tests\Functional\Fixture\HttpClient

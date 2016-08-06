@@ -2,11 +2,6 @@
 
 namespace Tests\Functional\Fixture;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamInterface;
-use Psr\Http\Message\UriInterface;
-
 class MessageFactory implements \Http\Message\MessageFactory
 {
     public function createRequest(
@@ -28,5 +23,4 @@ class MessageFactory implements \Http\Message\MessageFactory
     ) {
         // TODO: Implement createResponse() method.
     }
-
 }

@@ -10,3 +10,7 @@ services:
   happyr.google_analytics.clientIdProvider:
     class: Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider
     arguments: ["@request_stack"]
+
+  Happyr\GoogleAnalyticsBundle\Service\Tracker: "@happyr.google_analytics.tracker"
+  Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider: "@happyr.google_analytics.clientIdProvider"
+  Happyr\GoogleAnalyticsBundle\Http\VoidHttpClient: "@happyr.google_analytics.http.void"

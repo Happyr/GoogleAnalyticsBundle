@@ -4,76 +4,51 @@ namespace Happyr\GoogleAnalyticsBundle\Http;
 
 use Http\Client\HttpClient as HttplugClient;
 use Http\Message\MessageFactory;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 
 /**
  * This is an adapter for Httplug.
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class HttpClient implements HttpClientInterface
+class HttpClient implements AnalyticsClientInterface
 {
     /**
      * @var string endpoint
      *
      * Where to POST the requests
      */
-    protected $endpoint;
+    private $endpoint;
 
     /**
-     * @var HttplugClient client
+     * @var ClientInterface
      */
-    protected $client;
+    private $client;
 
     /**
-     * @var MessageFactory
+     * @var RequestFactoryInterface
      */
-    protected $messageFactory;
+    private $requestFactory;
 
-    /**
-     * @param HttplugClient  $client
-     * @param MessageFactory $messageFactory
-     * @param string         $endpoint
-     */
-    public function __construct(HttplugClient $client, MessageFactory $messageFactory, $endpoint)
+
+    public function __construct(ClientInterface $client, RequestFactoryInterface $requestFactory, string $endpoint)
     {
         $this->endpoint = $endpoint;
         $this->client = $client;
-        $this->messageFactory = $messageFactory;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
      * Send a post request to the endpoint.
-     *
-     * @param array $data
-     *
-     * @return bool
      */
-    public function send(array $data = [])
+    public function send(array $data = []): bool
     {
-        $request = $this->getMessageFactory()->createRequest(
-            'POST',
-            $this->endpoint,
-            ['User-Agent' => 'happyr-google-analytics/4.0'],
-            http_build_query($data)
-        );
-        $response = $this->getClient()->sendRequest($request);
+        $request = $this->requestFactory->createRequest('POST', $this->endpoint);
+        $request = $request->withAddedHeader('User-Agent', 'happyr-google-analytics/5.0');
+        $request->getBody()->write(http_build_query($data));
+        $response = $this->client->sendRequest($request);
 
         return $response->getStatusCode() === 200;
-    }
-
-    /**
-     * @return HttplugClient
-     */
-    protected function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
-     * @return MessageFactory
-     */
-    protected function getMessageFactory()
-    {
-        return $this->messageFactory;
     }
 }

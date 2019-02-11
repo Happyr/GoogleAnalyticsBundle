@@ -9,7 +9,7 @@ use Psr\Cache\CacheItemPoolInterface;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class DataFetcher
+class AnalyticsDataFetcher
 {
     /**
      * @var CacheItemPoolInterface cache
@@ -31,13 +31,7 @@ class DataFetcher
      */
     protected $cacheLifetime;
 
-    /**
-     * @param CacheItemPoolInterface $cache
-     * @param \Google_Client         $client
-     * @param int                    $viewId
-     * @param int                    $cacheLifetime seconds
-     */
-    public function __construct(CacheItemPoolInterface $cache, \Google_Client $client, $viewId, $cacheLifetime)
+    public function __construct(CacheItemPoolInterface $cache, \Google_Client $client, string $viewId, int $cacheLifetime)
     {
         $this->cache = $cache;
         $this->client = $client;
@@ -48,14 +42,9 @@ class DataFetcher
     /**
      * Get page views for the given url.
      *
-     * @param string         $uri
-     * @param \DateTime|null $startTime
-     * @param \DateTime|null $endTime
-     * @param string         $regex
-     *
-     * @return int
+     * @return mixed
      */
-    public function getPageViews($uri, \DateTime $startTime = null, \DateTime $endTime = null, $regex = '$')
+    public function getPageViews(string $uri, \DateTimeInterface $startTime = null, \DateTimeInterface $endTime = null, string $regex = '$', array $params = [])
     {
         if (empty($this->viewId)) {
             throw new \LogicException('You need to specify a profile id that we are going to fetch page views from');
@@ -75,40 +64,37 @@ class DataFetcher
         $end = $endTime->format('Y-m-d');
 
         //create the cache key
-        $cacheKey = sha1($uri.$regex.$start);
+        $cacheKey = sha1('v5'.$uri.$regex.$start);
         $item = $this->cache->getItem($cacheKey);
         if (!$item->isHit()) {
             //check if we got a token
             if (null === $this->client->getAccessToken()) {
-                return 0;
+                return [];
             }
 
-            //remove the app_dev.php
-            $uri = str_replace('/app_dev.php/', '/', $uri);
-
-            //fetch result
+            $params['filters'] = 'ga:pagePath=~^'.$uri.$regex;
             try {
                 $analytics = new \Google_Service_Analytics($this->client);
-                $results = $analytics->data_ga->get(
-                    'ga:'.$this->viewId,
-                    $start,
-                    $end,
-                    'ga:pageviews',
-                    ['filters' => 'ga:pagePath=~^'.$uri.$regex]
-                );
+                $results = $analytics->data_ga->get('ga:'.$this->viewId, $start, $end, 'ga:pageviews', $params);
 
                 $rows = $results->getRows();
-                $visits = intval($rows[0][0]);
             } catch (\Google_Auth_Exception $e) {
-                $visits = 0;
+                $rows = [];
             }
 
             //save cache item
-            $item->set($visits)
+            $item->set($rows)
                 ->expiresAfter($this->cacheLifetime);
             $this->cache->save($item);
         }
 
         return $item->get();
+    }
+
+    public function getPageViewsAsInteger(string $uri, \DateTimeInterface $startTime = null, \DateTimeInterface $endTime = null, string $regex = '$'): int
+    {
+        $rows = $this->getPageViews($uri, $startTime, $endTime, $regex);
+
+        return intval($rows[0][0] ?? 0);
     }
 }

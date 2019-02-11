@@ -4,7 +4,10 @@ namespace Happyr\GoogleAnalyticsBundle\Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BaseTestCase extends WebTestCase
+/**
+ * @internal
+ */
+abstract class BaseTestCase extends WebTestCase
 {
     protected static function getKernelClass()
     {
@@ -18,7 +21,7 @@ class BaseTestCase extends WebTestCase
         $class = self::getKernelClass();
 
         return new $class(
-            isset($options['config']) ? $options['config'] : 'default.yml'
+            $options['config'] ?? 'default.yml'
         );
     }
 }

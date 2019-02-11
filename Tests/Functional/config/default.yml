@@ -1,0 +1,10 @@
+happyr_google_analytics:
+  tracking_id: 'foobar'
+
+
+services:
+  httplug.message_factory:
+    class: Happyr\GoogleAnalyticsBundle\Tests\Functional\Fixture\MessageFactory
+
+  httplug.client:
+    class: Happyr\GoogleAnalyticsBundle\Tests\Functional\Fixture\HttpClient

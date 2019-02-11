@@ -16,9 +16,15 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('happyr_google_analytics');
+        $treeBuilder = new TreeBuilder('happyr_google_analytics');
+        // Keep compatibility with symfony/config < 4.2
+        if (!method_exists($treeBuilder, 'getRootNode')) {
+            $root = $treeBuilder->root('happyr_google_analytics');
+        } else {
+            $root = $treeBuilder->getRootNode();
+        }
 
-        $rootNode
+        $root
             ->children()
             ->booleanNode('enabled')->defaultTrue()->info('If disabled we will not send any data')->end()
             ->scalarNode('version')->cannotBeEmpty()->defaultValue(1)->info('The version of the Measurement Protocol')->end()

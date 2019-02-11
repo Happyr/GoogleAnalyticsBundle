@@ -2,14 +2,18 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Tests\Unit\Service;
 
+use Happyr\GoogleAnalyticsBundle\Http\AnalyticsClientInterface;
+use Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider;
 use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 
 /**
  * Class TrackerTest.
  *
  * @author Tobias Nyholm
+ *
+ * @internal
  */
-class TrackerTest extends \PHPUnit_Framework_TestCase
+final class TrackerTest extends \PHPUnit\Framework\TestCase
 {
     public function testSend()
     {
@@ -25,61 +29,27 @@ class TrackerTest extends \PHPUnit_Framework_TestCase
             'baz' => 'bar',
         ];
 
-        $httpClient = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface')
+        $httpClient = $this->getMockBuilder(AnalyticsClientInterface::class)
             ->setMethods(['send'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $httpClient->expects($this->once())
+        $httpClient->expects(self::once())
             ->method('send')
             ->with($data)
             ->willReturn(true);
 
-        $clientIdProvider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
+        $clientIdProvider = $this->getMockBuilder(ClientIdProvider::class)
+            ->setMethods(['getClientId'])
             ->disableOriginalConstructor()
             ->getMock();
 
-        $tracker = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\Tracker')
-            ->setMethods(['getClientId'])
-            ->enableOriginalConstructor()
-            ->setConstructorArgs([$httpClient, $clientIdProvider, $trackerId, $version])
-            ->getMock();
-
-        $tracker->expects($this->once())
+        $clientIdProvider->expects(self::once())
             ->method('getClientId')
             ->willReturn($clientId);
+
+        $tracker = new Tracker($httpClient, $clientIdProvider, $trackerId, $version);
 
         $tracker->send(['baz' => 'bar'], 'pageview');
-    }
-
-    public function testGetClientId()
-    {
-        $clientId = 'foobar';
-        $provider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
-            ->setMethods(['getClientId'])
-            ->disableOriginalConstructor()
-            ->getMock();
-        $provider->expects($this->once())
-            ->method('getClientId')
-            ->willReturn($clientId);
-
-        $tracker = new TrackerDummy(
-            $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface')->getMock(),
-            $provider,
-            'foo',
-            'bar'
-        );
-
-        $firstResult = $tracker->getClientId();
-        $secondResult = $tracker->getClientId();
-
-        $this->assertEquals($firstResult, $secondResult, 'getClientId must return the same ID at every call');
-    }
-}
-class TrackerDummy extends Tracker
-{
-    public function getClientId()
-    {
-        return parent::getClientId();
     }
 }

@@ -28,7 +28,7 @@ Read the documentation of the [protocol][devguide].
 ``` php
 
 //in some container aware class
-$tracker = $this->get('happyr.google_analytics.tracker');
+$tracker = $this->get(Tracker::class);
 $data=array(
     'dh'=>'mydemo.com',
     'dp'=>'/home',
@@ -107,7 +107,7 @@ happyr_google_analytics:
 You may then run the following code to get the page views for /example-page.
 
 ``` php
-$fetcher = $this->get('happyr.google_analytics.data_fetcher');
+$fetcher = $this->get(AnalyticsDataFetcher::class);
 $pv = $fetcher->getPageViews('/example-page');
 ```
 

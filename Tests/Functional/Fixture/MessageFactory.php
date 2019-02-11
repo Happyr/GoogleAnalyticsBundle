@@ -1,26 +1,16 @@
 <?php
 
-namespace Tests\Functional\Fixture;
+namespace Happyr\GoogleAnalyticsBundle\Tests\Functional\Fixture;
 
-class MessageFactory implements \Http\Message\MessageFactory
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\UriInterface;
+
+class MessageFactory implements RequestFactoryInterface
 {
-    public function createRequest(
-        $method,
-        $uri,
-        array $headers = [],
-        $body = null,
-        $protocolVersion = '1.1'
-    ) {
-        // TODO: Implement createRequest() method.
+    public function createRequest(string $method, $uri): RequestInterface
+    {
+
     }
 
-    public function createResponse(
-        $statusCode = 200,
-        $reasonPhrase = null,
-        array $headers = [],
-        $body = null,
-        $protocolVersion = '1.1'
-    ) {
-        // TODO: Implement createResponse() method.
-    }
 }

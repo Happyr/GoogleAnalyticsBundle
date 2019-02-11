@@ -2,7 +2,7 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Service;
 
-use Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface;
+use Happyr\GoogleAnalyticsBundle\Http\AnalyticsClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -14,39 +14,33 @@ class Tracker
      *
      * The version of the Measurement Protocol
      */
-    protected $version;
+    private $version;
 
     /**
      * @var string trackerId
      *
      * The tracker id UA-XXXX-Y
      */
-    protected $trackerId;
+    private $trackerId;
 
     /**
      * @var string clientId
      *
      * The unique client Id. This is a visitor id
      */
-    protected $clientId;
+    private $clientId;
 
     /**
-     * @var HttpClientInterface client
+     * @var AnalyticsClientInterface client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var ClientIdProvider clientIdProvider
      */
-    protected $clientIdProvider;
+    private $clientIdProvider;
 
-    /**
-     * @param HttpClientInterface $client
-     * @param ClientIdProvider    $cip
-     * @param string              $trackerId
-     * @param string              $version
-     */
-    public function __construct(HttpClientInterface $client, ClientIdProvider $cip, $trackerId, $version)
+    public function __construct(AnalyticsClientInterface $client, ClientIdProvider $cip, string $trackerId, string $version)
     {
         $this->client = $client;
         $this->trackerId = $trackerId;
@@ -78,7 +72,7 @@ class Tracker
      *
      * @param array $data
      */
-    protected function appendDefaultParameters(array &$data)
+    private function appendDefaultParameters(array &$data)
     {
         if (empty($data['v'])) {
             $data['v'] = $this->version;
@@ -93,10 +87,7 @@ class Tracker
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function getClientId()
+    private function getClientId(): ?string
     {
         if ($this->clientId === null) {
             $this->clientId = $this->clientIdProvider->getClientId();

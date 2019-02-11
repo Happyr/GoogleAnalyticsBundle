@@ -1,3 +1,12 @@
+# Upgrade from 4.x to 5.0
+
+* All services are using FQCN as service ID. 
+* We use PSR-18 and PSR-17 instead of HTTPlug.
+* Renamed `HttpClientInterface` to `AnalyticsClientInterface`
+* Renamed `DataFetcher` to `AnalyticsDataFetcher`
+* Updated return value of `AnalyticsDataFetcher::getPageViews` to support more flexible queries. 
+* Added PHP7 type hints
+
 # Upgrade from 3.2.2 to 4.0
 
 * Class parameters has been removed to comply with the new Symfony best practices.

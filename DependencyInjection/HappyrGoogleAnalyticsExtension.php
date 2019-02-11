@@ -6,6 +6,7 @@ use Cache\Adapter\Void\VoidCachePool;
 use Happyr\GoogleAnalyticsBundle\Http\AnalyticsClientInterface;
 use Happyr\GoogleAnalyticsBundle\Http\HttpClient;
 use Happyr\GoogleAnalyticsBundle\Http\VoidHttpClient;
+use Happyr\GoogleAnalyticsBundle\Service\AnalyticsDataFetcher;
 use Happyr\GoogleAnalyticsBundle\Service\DataFetcher;
 use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 use Symfony\Component\Config\FileLocator;
@@ -21,9 +22,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  */
 class HappyrGoogleAnalyticsExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();

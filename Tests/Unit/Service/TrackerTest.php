@@ -2,7 +2,7 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Tests\Unit\Service;
 
-use Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface;
+use Happyr\GoogleAnalyticsBundle\Http\AnalyticsClientInterface;
 use Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider;
 use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 
@@ -29,7 +29,7 @@ final class TrackerTest extends \PHPUnit\Framework\TestCase
             'baz' => 'bar',
         ];
 
-        $httpClient = $this->getMockBuilder(HttpClientInterface::class)
+        $httpClient = $this->getMockBuilder(AnalyticsClientInterface::class)
             ->setMethods(['send'])
             ->disableOriginalConstructor()
             ->getMock();

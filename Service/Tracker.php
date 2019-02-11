@@ -2,7 +2,7 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Service;
 
-use Happyr\GoogleAnalyticsBundle\Http\HttpClientInterface;
+use Happyr\GoogleAnalyticsBundle\Http\AnalyticsClientInterface;
 
 /**
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
@@ -31,7 +31,7 @@ class Tracker
     private $clientId;
 
     /**
-     * @var HttpClientInterface client
+     * @var AnalyticsClientInterface client
      */
     private $client;
 
@@ -40,13 +40,7 @@ class Tracker
      */
     private $clientIdProvider;
 
-    /**
-     * @param HttpClientInterface $client
-     * @param ClientIdProvider    $cip
-     * @param string              $trackerId
-     * @param string              $version
-     */
-    public function __construct(HttpClientInterface $client, ClientIdProvider $cip, $trackerId, $version)
+    public function __construct(AnalyticsClientInterface $client, ClientIdProvider $cip, string $trackerId, string $version)
     {
         $this->client = $client;
         $this->trackerId = $trackerId;

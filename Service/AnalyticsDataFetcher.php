@@ -9,7 +9,7 @@ use Psr\Cache\CacheItemPoolInterface;
  *
  * @author Tobias Nyholm <tobias.nyholm@gmail.com>
  */
-class DataFetcher
+class AnalyticsDataFetcher
 {
     /**
      * @var CacheItemPoolInterface cache

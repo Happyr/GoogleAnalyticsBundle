@@ -8,20 +8,11 @@ use Happyr\GoogleAnalyticsBundle\Service\Tracker;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\DependencyInjection\Reference;
 
-class HappyrGoogleAnalyticsExtensionTest extends AbstractExtensionTestCase
+/**
+ * @internal
+ */
+final class HappyrGoogleAnalyticsExtensionTest extends AbstractExtensionTestCase
 {
-    protected function getMinimalConfiguration()
-    {
-        return ['tracking_id' => 'id'];
-    }
-
-    protected function getContainerExtensions()
-    {
-        return [
-            new HappyrGoogleAnalyticsExtension(),
-        ];
-    }
-
     public function testTracker()
     {
         $this->load();
@@ -47,5 +38,17 @@ class HappyrGoogleAnalyticsExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
         $this->assertContainerBuilderNotHasService('happyr.google_analytics.data_fetcher');
+    }
+
+    protected function getMinimalConfiguration()
+    {
+        return ['tracking_id' => 'id'];
+    }
+
+    protected function getContainerExtensions()
+    {
+        return [
+            new HappyrGoogleAnalyticsExtension(),
+        ];
     }
 }

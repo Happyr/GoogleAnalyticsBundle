@@ -9,8 +9,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * Class ClientIdProviderTest.
  *
  * @author Tobias Nyholm
+ *
+ * @internal
  */
-class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
+final class ClientIdProviderTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetClientId()
     {
@@ -18,21 +20,21 @@ class ClientIdProviderTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['getClientIdFormCookie'])
             ->disableOriginalConstructor()
             ->getMock();
-        $provider->expects($this->once())
+        $provider->expects(self::once())
             ->method('getClientIdFormCookie')
             ->willReturn(false);
 
         $result = $provider->getClientId();
 
-        $this->assertRegExp('|[0-9]{9}+|', $result, 'Not big and random enough');
+        self::assertRegExp('|[0-9]{9}+|', $result, 'Not big and random enough');
     }
 
     public function testExtractCookie()
     {
         $provider = new ProviderDummy();
 
-        $this->assertEquals('1110480476.1405690517', $provider->extractCookie('GA1.2.1110480476.1405690517'));
-        $this->assertEquals('286403989.1366364567', $provider->extractCookie('1.2.286403989.1366364567'));
+        self::assertEquals('1110480476.1405690517', $provider->extractCookie('GA1.2.1110480476.1405690517'));
+        self::assertEquals('286403989.1366364567', $provider->extractCookie('1.2.286403989.1366364567'));
     }
 }
 class ProviderDummy extends ClientIdProvider

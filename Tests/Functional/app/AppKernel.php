@@ -20,8 +20,8 @@ class AppKernel extends Kernel
             $config = __DIR__.'/config/'.$config;
         }
 
-        if (!file_exists($config)) {
-            throw new \RuntimeException(sprintf('The config file "%s" does not exist', $config));
+        if (!\file_exists($config)) {
+            throw new \RuntimeException(\sprintf('The config file "%s" does not exist', $config));
         }
 
         $this->config = $config;
@@ -42,7 +42,7 @@ class AppKernel extends Kernel
 
     public function getCacheDir()
     {
-        return sys_get_temp_dir().'/TestBundle';
+        return \sys_get_temp_dir().'/TestBundle';
     }
 
     public function serialize()

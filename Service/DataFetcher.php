@@ -53,9 +53,9 @@ class DataFetcher
      * @param \DateTime|null $endTime
      * @param string         $regex
      *
-     * @return int
+     * @return mixed
      */
-    public function getPageViews($uri, \DateTime $startTime = null, \DateTime $endTime = null, $regex = '$')
+    public function getPageViews(string $uri, \DateTimeInterface $startTime = null, \DateTimeInterface $endTime = null, string $regex = '$')
     {
         if (empty($this->viewId)) {
             throw new \LogicException('You need to specify a profile id that we are going to fetch page views from');

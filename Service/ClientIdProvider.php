@@ -18,9 +18,6 @@ class ClientIdProvider
      */
     protected $requestStack;
 
-    /**
-     * @param RequestStack $requestStack
-     */
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
@@ -28,7 +25,6 @@ class ClientIdProvider
 
     /**
      * Get client id from cookie... if we can.
-     *
      *
      * @return false|string
      */

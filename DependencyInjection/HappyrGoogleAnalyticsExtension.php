@@ -48,11 +48,7 @@ class HappyrGoogleAnalyticsExtension extends Extension
         }
     }
 
-    /**
-     * @param ContainerBuilder $container
-     * @param $config
-     */
-    private function configureDataFetcher(ContainerBuilder $container, $config)
+    private function configureDataFetcher(ContainerBuilder $container, array $config)
     {
         if (!empty($config['fetching']['cache_service'])) {
             $cacheService = $config['fetching']['cache_service'];

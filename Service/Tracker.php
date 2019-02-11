@@ -14,31 +14,31 @@ class Tracker
      *
      * The version of the Measurement Protocol
      */
-    protected $version;
+    private $version;
 
     /**
      * @var string trackerId
      *
      * The tracker id UA-XXXX-Y
      */
-    protected $trackerId;
+    private $trackerId;
 
     /**
      * @var string clientId
      *
      * The unique client Id. This is a visitor id
      */
-    protected $clientId;
+    private $clientId;
 
     /**
      * @var HttpClientInterface client
      */
-    protected $client;
+    private $client;
 
     /**
      * @var ClientIdProvider clientIdProvider
      */
-    protected $clientIdProvider;
+    private $clientIdProvider;
 
     /**
      * @param HttpClientInterface $client
@@ -78,7 +78,7 @@ class Tracker
      *
      * @param array $data
      */
-    protected function appendDefaultParameters(array &$data)
+    private function appendDefaultParameters(array &$data)
     {
         if (empty($data['v'])) {
             $data['v'] = $this->version;
@@ -93,10 +93,7 @@ class Tracker
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function getClientId()
+    private function getClientId(): ?string
     {
         if ($this->clientId === null) {
             $this->clientId = $this->clientIdProvider->getClientId();

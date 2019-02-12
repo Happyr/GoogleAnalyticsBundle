@@ -64,7 +64,7 @@ class AnalyticsDataFetcher
         $end = $endTime->format('Y-m-d');
 
         //create the cache key
-        $cacheKey = sha1('v5'.$uri.$regex.$start);
+        $cacheKey = sha1($uri.$regex.$start.json_encode($params));
         $item = $this->cache->getItem($cacheKey);
         if (!$item->isHit()) {
             //check if we got a token

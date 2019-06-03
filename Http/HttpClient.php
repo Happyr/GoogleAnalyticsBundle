@@ -2,8 +2,6 @@
 
 namespace Happyr\GoogleAnalyticsBundle\Http;
 
-use Http\Client\HttpClient as HttplugClient;
-use Http\Message\MessageFactory;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 

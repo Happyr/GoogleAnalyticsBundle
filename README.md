@@ -3,7 +3,7 @@ Google Analytics Bundle
 
 [![Latest Version](https://img.shields.io/github/release/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://github.com/Happyr/GoogleAnalyticsBundle/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build Status](https://img.shields.io/travis/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://travis-ci.org/Happyr/GoogleAnalyticsBundle)
+[![Build Status](https://img.shields.io/github/checks-status/Happyr/GoogleAnalyticsBundle/master?label=build&style=flat-square)](https://github.com/Happyr/GoogleAnalyticsBundle/actions?query=branch%3Amaster)
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/Happyr/GoogleAnalyticsBundle)
 [![Quality Score](https://img.shields.io/scrutinizer/g/Happyr/GoogleAnalyticsBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/Happyr/GoogleAnalyticsBundle)
 [![Total Downloads](https://img.shields.io/packagist/dt/happyr/google-analytics-bundle.svg?style=flat-square)](https://packagist.org/packages/happyr/google-analytics-bundle)

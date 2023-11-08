@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 final class ClientIdProviderTest extends \PHPUnit\Framework\TestCase
 {
-    public function testGetClientId()
+    public function testGetClientId(): void
     {
         $provider = $this->getMockBuilder('Happyr\GoogleAnalyticsBundle\Service\ClientIdProvider')
             ->setMethods(['getClientIdFormCookie'])
@@ -29,7 +29,7 @@ final class ClientIdProviderTest extends \PHPUnit\Framework\TestCase
         self::assertRegExp('|[0-9]{9}+|', $result, 'Not big and random enough');
     }
 
-    public function testExtractCookie()
+    public function testExtractCookie(): void
     {
         $provider = new ProviderDummy();
 

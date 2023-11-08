@@ -15,7 +15,7 @@ use Happyr\GoogleAnalyticsBundle\Service\Tracker;
  */
 final class TrackerTest extends \PHPUnit\Framework\TestCase
 {
-    public function testSend()
+    public function testSend(): void
     {
         $trackerId = 'foo';
         $version = 1;

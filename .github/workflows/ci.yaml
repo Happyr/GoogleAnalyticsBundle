@@ -1,0 +1,35 @@
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+
+permissions:
+  pull-requests: read
+
+jobs:
+  ci:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+
+    steps:
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - run: composer install
+
+      - run: composer run-script test
